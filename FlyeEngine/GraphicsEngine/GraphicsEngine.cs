@@ -1,7 +1,7 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using OpenTK.Windowing.Desktop;
 
-namespace FlyeEngine
+namespace FlyeEngine.GraphicsEngine
 {
     internal class GraphicsEngine : GameWindow
     {

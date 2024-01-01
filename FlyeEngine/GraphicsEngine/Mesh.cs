@@ -1,7 +1,7 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 
-namespace FlyeEngine
+namespace FlyeEngine.GraphicsEngine
 {
     /// <summary>
     /// Object that creates / stores a vertex buffer of all vertices for a given model
@@ -72,8 +72,8 @@ namespace FlyeEngine
                                 for (var i = 1; i < 4; i++)
                                 {
                                     verticesForGpu.Add(allVertices[int.Parse(index[i]) - 1].X);
-                                    verticesForGpu.Add(allVertices[int.Parse(index[0]) - 1].Y);
-                                    verticesForGpu.Add(allVertices[int.Parse(index[0]) - 1].Z);
+                                    verticesForGpu.Add(allVertices[int.Parse(index[i]) - 1].Y);
+                                    verticesForGpu.Add(allVertices[int.Parse(index[i]) - 1].Z);
                                 }
                             }
                             break;

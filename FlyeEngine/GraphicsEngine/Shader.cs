@@ -1,7 +1,7 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 
-namespace FlyeEngine
+namespace FlyeEngine.GraphicsEngine
 {
     internal class Shader : IDisposable
     {

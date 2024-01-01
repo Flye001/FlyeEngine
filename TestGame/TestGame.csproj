@@ -11,4 +11,10 @@
     <ProjectReference Include="..\FlyeEngine\FlyeEngine.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="MyObjects\cube.obj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

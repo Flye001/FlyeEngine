@@ -1,4 +1,5 @@
-﻿using OpenTK.Windowing.Desktop;
+﻿using FlyeEngine.GraphicsEngine;
+using OpenTK.Windowing.Desktop;
 
 namespace FlyeEngine
 {
@@ -24,7 +25,10 @@ namespace FlyeEngine
         /// <summary>
         /// Manages the OpenTK window
         /// </summary>
-        private GraphicsEngine _graphicsEngine;
+        private GraphicsEngine.GraphicsEngine _graphicsEngine;
+
+        private Dictionary<string, Mesh> _meshCollection;
+        private List<GameObject> _sceneObjects;
 
         /// <summary>
         /// Create new game instance
@@ -47,6 +51,22 @@ namespace FlyeEngine
                 Title = _screen_name
             };
             _graphicsEngine = new(windowSettings);
+            _sceneObjects = new();
+            _meshCollection = new();
+        }
+
+        public void AddGameObject(Transform transform)
+        {
+            _sceneObjects.Add(new GameObject(transform.Position, transform.Rotation, transform.Scale));
+        }
+
+        public void AddGameObjectWithMesh(Transform transform, string meshFilePath)
+        {
+            if (! _meshCollection.ContainsKey(meshFilePath))
+            {
+                _meshCollection.Add(meshFilePath, new Mesh(meshFilePath));
+            }
+            _sceneObjects.Add(new GameObject(transform.Position, transform.Rotation, transform.Scale, _meshCollection[meshFilePath]));
         }
 
         public void StartGame()
