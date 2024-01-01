@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlyeEngine", "FlyeEngine\FlyeEngine.csproj", "{048DA59B-DA77-41B5-B707-1C733166D93E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlyeEngine", "FlyeEngine\FlyeEngine.csproj", "{048DA59B-DA77-41B5-B707-1C733166D93E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGame", "TestGame\TestGame.csproj", "{3FCF227A-95EB-439F-A72E-6D49AEF933B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestGame", "TestGame\TestGame.csproj", "{3FCF227A-95EB-439F-A72E-6D49AEF933B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlyeEngine.UnitTests", "FlyeEngine.UnitTests\FlyeEngine.UnitTests.csproj", "{0F7CD451-64EA-4992-9976-C5987FD1ACE8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{3FCF227A-95EB-439F-A72E-6D49AEF933B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FCF227A-95EB-439F-A72E-6D49AEF933B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FCF227A-95EB-439F-A72E-6D49AEF933B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F7CD451-64EA-4992-9976-C5987FD1ACE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F7CD451-64EA-4992-9976-C5987FD1ACE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F7CD451-64EA-4992-9976-C5987FD1ACE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F7CD451-64EA-4992-9976-C5987FD1ACE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
