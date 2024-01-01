@@ -17,7 +17,7 @@ namespace TestGame
                 Rotation = Vector3.Zero,
                 Scale = Vector3.One
             };
-            game.AddGameObjectWithMesh(objTrans, "MyObjects/cube.obj");
+            game.AddGameObjectWithMesh(objTrans, "MyObjects/teapot.obj");
             
             game.StartGame();
         }
