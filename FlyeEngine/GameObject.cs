@@ -9,7 +9,7 @@ namespace FlyeEngine
         private Vector3 _rotation;
         private Vector3 _scale;
 
-        private Mesh? _mesh;
+        private readonly Mesh? _mesh;
 
         public GameObject(Vector3 position, Vector3 rotation, Vector3 scale)
         {
@@ -24,6 +24,13 @@ namespace FlyeEngine
             _rotation = rotation;
             _scale = scale;
             _mesh = mesh;
+        }
+
+        public void Render()
+        {
+            if (_mesh == null) return;
+
+            _mesh.Draw();
         }
     }
 }

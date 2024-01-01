@@ -8,9 +8,9 @@ namespace FlyeEngine.GraphicsEngine
     /// </summary>
     internal class Mesh
     {
-        private int _vertexArrayObject;
-        private int _vertexBufferObject;
-        private int _numOfVertices;
+        private readonly int _vertexArrayObject;
+        private readonly int _vertexBufferObject;
+        private readonly int _numOfVertices;
 
         public Mesh(string objectFilePath)
         {
@@ -97,6 +97,14 @@ namespace FlyeEngine.GraphicsEngine
             var vertexArray = verticesForGpu.ToArray();
             _numOfVertices = vertexArray.Length;
             GL.BufferData(BufferTarget.ArrayBuffer, _numOfVertices * sizeof(float), vertexArray, BufferUsageHint.StaticDraw);
+        }
+
+        public void Draw()
+        {
+            GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject);
+            GL.BindVertexArray(_vertexArrayObject);
+
+            GL.DrawArrays(PrimitiveType.Triangles, 0, _numOfVertices);
         }
     }
 }

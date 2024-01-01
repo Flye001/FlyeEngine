@@ -25,10 +25,10 @@ namespace FlyeEngine
         /// <summary>
         /// Manages the OpenTK window
         /// </summary>
-        private GraphicsEngine.GraphicsEngine _graphicsEngine;
+        private readonly GraphicsEngine.GraphicsEngine _graphicsEngine;
 
-        private Dictionary<string, Mesh> _meshCollection;
-        private List<GameObject> _sceneObjects;
+        private readonly Dictionary<string, Mesh> _meshCollection;
+        private readonly List<GameObject> _sceneObjects;
 
         /// <summary>
         /// Create new game instance
@@ -50,9 +50,22 @@ namespace FlyeEngine
                 MinimumClientSize = (_screen_width, _screen_height),
                 Title = _screen_name
             };
-            _graphicsEngine = new(windowSettings);
+            _graphicsEngine = new(windowSettings, UpdateFrame, RenderFrame, _screen_aspect_ration);
             _sceneObjects = new();
             _meshCollection = new();
+        }
+
+        private void UpdateFrame()
+        {
+
+        }
+
+        private void RenderFrame()
+        {
+            foreach (var sceneObject in _sceneObjects)
+            {
+                sceneObject.Render();
+            }
         }
 
         public void AddGameObject(Transform transform)
