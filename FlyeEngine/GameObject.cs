@@ -53,8 +53,7 @@ namespace FlyeEngine
             _rotation = rotation;
             _scale = scale;
 
-            ModelMatrix = Matrix4.CreateTranslation(Position) * Matrix4.CreateRotationX(Rotation.X) * Matrix4.CreateRotationX(Rotation.Y) * Matrix4.CreateRotationX(Rotation.Z) * Matrix4.CreateScale(Scale);
-            ModelNormalMatrix = new Matrix3(Matrix4.Transpose(Matrix4.Invert(ModelMatrix)));
+            UpdateModelMatrix();
         }
 
         public GameObject(Vector3 position, Vector3 rotation, Vector3 scale, Mesh mesh, ShaderTypeEnum shader, Vector3 color)
@@ -66,18 +65,19 @@ namespace FlyeEngine
             ShaderType = shader;
             Color = color;
 
-            ModelMatrix = Matrix4.CreateTranslation(Position) * Matrix4.CreateRotationX(Rotation.X) * Matrix4.CreateRotationX(Rotation.Y) * Matrix4.CreateRotationX(Rotation.Z) * Matrix4.CreateScale(Scale);
-            ModelNormalMatrix = new Matrix3(Matrix4.Transpose(Matrix4.Invert(ModelMatrix)));
+            UpdateModelMatrix();
         }
 
         private void UpdateModelMatrix()
         {
             ModelMatrix =
-                Matrix4.CreateRotationX(Rotation.X)
+                Matrix4.CreateScale(Scale)
+
+                * Matrix4.CreateRotationX(Rotation.X)
                 * Matrix4.CreateRotationY(Rotation.Y)
                 * Matrix4.CreateRotationZ(Rotation.Z)
-                * Matrix4.CreateTranslation(Position)
-                * Matrix4.CreateScale(Scale);
+                
+                * Matrix4.CreateTranslation(Position);
             ModelNormalMatrix = new Matrix3(Matrix4.Transpose(Matrix4.Invert(ModelMatrix)));
         }
 

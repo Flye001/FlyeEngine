@@ -32,8 +32,8 @@ namespace TestGame
 
             Transform planeTrans = new()
             {
-                Position = new Vector3(250, 250, 10000),
-                Rotation = Vector3.Zero,
+                Position = new Vector3(-5, 10, 30),
+                Rotation = new Vector3(-float.Pi / 6f, 0, float.Pi / 4f),
                 Scale = new Vector3(0.01f)
             };
             game.AddGameObjectWithMesh(planeTrans, "MyObjects/airplane.obj", ShaderTypeEnum.SingleColorWithLight, new Vector3(1f));
