@@ -7,7 +7,7 @@ namespace FlyeEngine.GraphicsEngine
 {
     internal class GraphicsEngine : GameWindow
     {
-        private readonly Shader _basicColorShader;
+        private Dictionary<ShaderTypeEnum, Shader> _shaders;
 
         private readonly Action<float> _update;
         private readonly Action _render;
@@ -19,21 +19,47 @@ namespace FlyeEngine.GraphicsEngine
         {
             _update = update;
             _render = render;
-            _basicColorShader = new Shader("Shaders/SingleColorShader.vert", "Shaders/SingleColorShader.frag");
+
+            _shaders = new Dictionary<ShaderTypeEnum, Shader>();
+            _shaders.Add(ShaderTypeEnum.SingleColor, new Shader("Shaders/SingleColorShader.vert", "Shaders/SingleColorShader.frag"));
 
             // Temporary
             _projectionMatrix = Matrix4.CreatePerspectiveFieldOfView(float.Pi / 2f, aspect, 0.1f, 1000f);
             _viewMatrix = Matrix4.Identity;
             var modelMatrix = Matrix4.CreateRotationX(float.Pi / 6f) * Matrix4.CreateTranslation(0f, 0f, -5f);
-            _basicColorShader.SetMatrix4("modelMatrix", ref modelMatrix);
-            _basicColorShader.SetMatrix4("viewMatrix", ref _viewMatrix);
-            _basicColorShader.SetMatrix4("projectionMatrix", ref _projectionMatrix);
+            foreach (var shader in _shaders.Values)
+            {
+                shader.SetMatrix4("modelMatrix", ref modelMatrix);
+                shader.SetMatrix4("viewMatrix", ref _viewMatrix);
+                shader.SetMatrix4("projectionMatrix", ref _projectionMatrix);
+            }
         }
 
         public void UpdateViewMatrix(Matrix4 matrix)
         {
             _viewMatrix = matrix;
-            _basicColorShader.SetMatrix4("viewMatrix", ref _viewMatrix);
+            foreach (var shader in _shaders.Values)
+            {
+                shader.SetMatrix4("viewMatrix", ref _viewMatrix);
+            }
+        }
+
+        public void UseShader(ShaderTypeEnum type)
+        {
+            if (!_shaders.ContainsKey(type))
+            {
+                throw new KeyNotFoundException($"Could not find shader for '{type}'!");
+            }
+            _shaders[type].Use();
+        }
+
+        public void SetShaderUniformVector3(ShaderTypeEnum shaderType, string propertyName, Vector3 propertyValue)
+        {
+            if (!_shaders.ContainsKey(shaderType))
+            {
+                throw new KeyNotFoundException($"Could not find shader for '{shaderType}'!");
+            }
+            _shaders[shaderType].SetVector3(propertyName, ref propertyValue);
         }
 
         protected override void OnLoad()
@@ -57,9 +83,6 @@ namespace FlyeEngine.GraphicsEngine
 
             GL.Clear(ClearBufferMask.ColorBufferBit);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
-            // Temporary
-            _basicColorShader.Use();
 
             _render();
 

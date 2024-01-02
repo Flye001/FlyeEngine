@@ -1,4 +1,5 @@
 ﻿using FlyeEngine;
+using FlyeEngine.GraphicsEngine;
 using OpenTK.Mathematics;
 
 namespace TestGame
@@ -17,7 +18,7 @@ namespace TestGame
                 Rotation = Vector3.Zero,
                 Scale = Vector3.One
             };
-            game.AddGameObjectWithMesh(objTrans, "MyObjects/teapot.obj");
+            game.AddGameObjectWithMesh(objTrans, "MyObjects/teapot.obj", ShaderTypeEnum.SingleColor, new Vector3(1f, 0.2f, 0.6f));
             
             game.StartGame();
         }

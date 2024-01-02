@@ -69,9 +69,14 @@ namespace FlyeEngine
             var keyboardState = _graphicsEngine.KeyboardState;
             var mouseState = _graphicsEngine.MouseState;
 
-            // Handle Camera Movement then update view matrix
+            // Handle Input
             if (_graphicsEngine.IsFocused)
             {
+                if (keyboardState.IsKeyDown(Keys.Escape))
+                {
+                    StopGame();
+                }
+
                 _gameCamera.HandleInput(keyboardState, mouseState, deltaTime);
                 _graphicsEngine.UpdateViewMatrix(_gameCamera.GetViewMatrix());
             }
@@ -81,6 +86,8 @@ namespace FlyeEngine
         {
             foreach (var sceneObject in _sceneObjects)
             {
+                _graphicsEngine.UseShader(sceneObject.ShaderType);
+                _graphicsEngine.SetShaderUniformVector3(sceneObject.ShaderType, "color", sceneObject.Color);
                 sceneObject.Render();
             }
         }
@@ -90,18 +97,23 @@ namespace FlyeEngine
             _sceneObjects.Add(new GameObject(transform.Position, transform.Rotation, transform.Scale));
         }
 
-        public void AddGameObjectWithMesh(Transform transform, string meshFilePath)
+        public void AddGameObjectWithMesh(Transform transform, string meshFilePath, ShaderTypeEnum shaderType, Vector3 objectColor)
         {
             if (! _meshCollection.ContainsKey(meshFilePath))
             {
                 _meshCollection.Add(meshFilePath, new Mesh(meshFilePath));
             }
-            _sceneObjects.Add(new GameObject(transform.Position, transform.Rotation, transform.Scale, _meshCollection[meshFilePath]));
+            _sceneObjects.Add(new GameObject(transform.Position, transform.Rotation, transform.Scale, _meshCollection[meshFilePath], shaderType, objectColor));
         }
 
         public void StartGame()
         {
             _graphicsEngine.Run();
+        }
+
+        public void StopGame()
+        {
+            _graphicsEngine.Close();
         }
     }
 }
