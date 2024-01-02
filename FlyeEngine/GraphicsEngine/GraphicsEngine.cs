@@ -21,8 +21,8 @@ namespace FlyeEngine.GraphicsEngine
             _render = render;
 
             _shaders = new Dictionary<ShaderTypeEnum, Shader>();
-            _shaders.Add(ShaderTypeEnum.SingleColor, new Shader("Shaders/SingleColorShader.vert", "Shaders/SingleColorShader.frag"));
-            _shaders.Add(ShaderTypeEnum.SingleColorWithLight, new Shader("Shaders/SingleColorShader.vert", "Shaders/SingleColorWithLightShader.frag"));
+            _shaders.Add(ShaderTypeEnum.SingleColor, new Shader("Engine/Shaders/SingleColorShader.vert", "Engine/Shaders/SingleColorShader.frag"));
+            _shaders.Add(ShaderTypeEnum.SingleColorWithLight, new Shader("Engine/Shaders/SingleColorShader.vert", "Engine/Shaders/SingleColorWithLightShader.frag"));
 
             // Temporary
             _projectionMatrix = Matrix4.CreatePerspectiveFieldOfView(float.Pi / 2f, aspect, 0.1f, 1000f);

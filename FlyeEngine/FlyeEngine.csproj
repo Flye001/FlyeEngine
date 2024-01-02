@@ -11,17 +11,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Shaders\" />
+    <Folder Include="Engine\Shaders\" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Shaders\SingleColorShader.frag">
+    <None Update="Engine\Shaders\SingleColorShader.frag">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Shaders\SingleColorShader.vert">
+    <None Update="Engine\Shaders\SingleColorShader.vert">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Shaders\SingleColorWithLightShader.frag">
+    <None Update="Engine\Shaders\SingleColorWithLightShader.frag">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
