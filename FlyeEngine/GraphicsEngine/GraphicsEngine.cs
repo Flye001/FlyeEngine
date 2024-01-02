@@ -26,10 +26,10 @@ namespace FlyeEngine.GraphicsEngine
             // Temporary
             _projectionMatrix = Matrix4.CreatePerspectiveFieldOfView(float.Pi / 2f, aspect, 0.1f, 1000f);
             _viewMatrix = Matrix4.Identity;
-            var modelMatrix = Matrix4.CreateRotationX(float.Pi / 6f) * Matrix4.CreateTranslation(0f, 0f, -5f);
+            //var modelMatrix = Matrix4.CreateRotationX(float.Pi / 6f) * Matrix4.CreateTranslation(0f, 0f, -5f);
             foreach (var shader in _shaders.Values)
             {
-                shader.SetMatrix4("modelMatrix", ref modelMatrix);
+                //shader.SetMatrix4("modelMatrix", ref modelMatrix);
                 shader.SetMatrix4("viewMatrix", ref _viewMatrix);
                 shader.SetMatrix4("projectionMatrix", ref _projectionMatrix);
             }
@@ -60,6 +60,15 @@ namespace FlyeEngine.GraphicsEngine
                 throw new KeyNotFoundException($"Could not find shader for '{shaderType}'!");
             }
             _shaders[shaderType].SetVector3(propertyName, ref propertyValue);
+        }
+
+        public void SetShaderUniformMatrix4(ShaderTypeEnum shaderType, string propertyName, Matrix4 propertyValue)
+        {
+            if (!_shaders.ContainsKey(shaderType))
+            {
+                throw new KeyNotFoundException($"Could not find shader for '{shaderType}'!");
+            }
+            _shaders[shaderType].SetMatrix4(propertyName, ref propertyValue);
         }
 
         protected override void OnLoad()

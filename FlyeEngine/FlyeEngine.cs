@@ -88,6 +88,7 @@ namespace FlyeEngine
             {
                 _graphicsEngine.UseShader(sceneObject.ShaderType);
                 _graphicsEngine.SetShaderUniformVector3(sceneObject.ShaderType, "color", sceneObject.Color);
+                _graphicsEngine.SetShaderUniformMatrix4(sceneObject.ShaderType, "modelMatrix", sceneObject.ModelMatrix);
                 sceneObject.Render();
             }
         }

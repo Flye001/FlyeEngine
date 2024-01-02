@@ -6,8 +6,39 @@ namespace FlyeEngine
     internal class GameObject
     {
         private Vector3 _position;
+        private Vector3 Position
+        {
+            get => _position;
+            set
+            {
+                _position = value;
+                UpdateModelMatrix();
+            }
+        }
+
         private Vector3 _rotation;
+        private Vector3 Rotation
+        {
+            get => _rotation;
+            set
+            {
+                _rotation = value;
+                UpdateModelMatrix();
+            }
+        }
+
         private Vector3 _scale;
+        private Vector3 Scale
+        {
+            get => _scale;
+            set
+            {
+                _scale = value;
+                UpdateModelMatrix();
+            }
+        }
+
+        public Matrix4 ModelMatrix { get; private set; }
         
 
         private readonly Mesh? _mesh;
@@ -19,6 +50,8 @@ namespace FlyeEngine
             _position = position;
             _rotation = rotation;
             _scale = scale;
+
+            ModelMatrix = Matrix4.CreateTranslation(Position) * Matrix4.CreateRotationX(Rotation.X) * Matrix4.CreateRotationX(Rotation.Y) * Matrix4.CreateRotationX(Rotation.Z) * Matrix4.CreateScale(Scale);
         }
 
         public GameObject(Vector3 position, Vector3 rotation, Vector3 scale, Mesh mesh, ShaderTypeEnum shader, Vector3 color)
@@ -29,6 +62,17 @@ namespace FlyeEngine
             _mesh = mesh;
             ShaderType = shader;
             Color = color;
+
+            ModelMatrix = Matrix4.CreateTranslation(Position) * Matrix4.CreateRotationX(Rotation.X) * Matrix4.CreateRotationX(Rotation.Y) * Matrix4.CreateRotationX(Rotation.Z) * Matrix4.CreateScale(Scale);
+        }
+
+        private void UpdateModelMatrix()
+        {
+            ModelMatrix = Matrix4.CreateTranslation(Position) 
+                          * Matrix4.CreateRotationX(Rotation.X) 
+                          * Matrix4.CreateRotationX(Rotation.Y) 
+                          * Matrix4.CreateRotationX(Rotation.Z) 
+                          * Matrix4.CreateScale(Scale);
         }
 
         public void Render()
