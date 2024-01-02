@@ -37,7 +37,7 @@ namespace TestGame
                 Scale = new Vector3(0.01f)
             };
             Transform boring = new() { Position = Vector3.Zero, Rotation = Vector3.Zero, Scale = new Vector3(0.01f)};
-            game.AddGameObjectWithTexture(boring, "MyObjects/airplane.obj", "MyTextures/airplane.png", ShaderTypeEnum.Texture);
+            game.AddGameObjectWithTexture(planeTrans, "MyObjects/airplane.obj", "MyTextures/airplane.png", ShaderTypeEnum.Texture);
 
             Transform lightT = new()
             {

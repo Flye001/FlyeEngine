@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using OpenTK.Graphics.OpenGL4;
+using StbImageSharp;
 
 namespace FlyeEngine.GraphicsEngine
 {
@@ -15,21 +16,14 @@ namespace FlyeEngine.GraphicsEngine
             GL.ActiveTexture(TextureUnit.Texture0);
             GL.BindTexture(TextureTarget.Texture2D, Handle);
 
-            List<byte> pixels = new();
-            var image = new Bitmap(imagePath);
-            image.RotateFlip(RotateFlipType.RotateNoneFlipX);
-            for (var i = 0; i < image.Width; i++)
+            StbImage.stbi_set_flip_vertically_on_load(1);
+            using (Stream stream = File.OpenRead(imagePath))
             {
-                for (int j = 0; j < image.Height; j++)
-                {
-                    var pixel = image.GetPixel(i, j);
-                    pixels.Add(pixel.R);
-                    pixels.Add(pixel.G);
-                    pixels.Add(pixel.B);
-                    pixels.Add(pixel.A);
-                }
+                ImageResult image = ImageResult.FromStream(stream, ColorComponents.RedGreenBlueAlpha);
+
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, image.Width, image.Height, 0,
+                    PixelFormat.Rgba, PixelType.UnsignedByte, image.Data);
             }
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, image.Width, image.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, pixels.ToArray());
             GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
         }
 
