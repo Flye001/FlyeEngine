@@ -1,5 +1,8 @@
 ﻿using FlyeEngine.GraphicsEngine;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace FlyeEngine
 {
@@ -27,6 +30,7 @@ namespace FlyeEngine
         /// </summary>
         private readonly GraphicsEngine.GraphicsEngine _graphicsEngine;
 
+        private readonly ICamera _gameCamera;
         private readonly Dictionary<string, Mesh> _meshCollection;
         private readonly List<GameObject> _sceneObjects;
 
@@ -36,7 +40,7 @@ namespace FlyeEngine
         /// <param name="targetWidth">Target game window width</param>
         /// <param name="targetHeight">Target game window height</param>
         /// <param name="name">Game window name</param>
-        public FlyeEngine(int targetWidth, int targetHeight, string name)
+        public FlyeEngine(int targetWidth, int targetHeight, string name, ICamera camera = null)
         {
             // TODO: Add logic to check if target screen size is larger than current display size
             _screen_width = targetWidth;
@@ -51,13 +55,26 @@ namespace FlyeEngine
                 Title = _screen_name
             };
             _graphicsEngine = new(windowSettings, UpdateFrame, RenderFrame, _screen_aspect_ration);
+            if (camera == null)
+            {
+                _gameCamera = new BasicCamera(_screen_aspect_ration, Vector3.Zero);
+                _graphicsEngine.CursorState = CursorState.Grabbed;
+            }
             _sceneObjects = new();
             _meshCollection = new();
         }
 
-        private void UpdateFrame()
+        private void UpdateFrame(float deltaTime)
         {
+            var keyboardState = _graphicsEngine.KeyboardState;
+            var mouseState = _graphicsEngine.MouseState;
 
+            // Handle Camera Movement then update view matrix
+            if (_graphicsEngine.IsFocused)
+            {
+                _gameCamera.HandleInput(keyboardState, mouseState, deltaTime);
+                _graphicsEngine.UpdateViewMatrix(_gameCamera.GetViewMatrix());
+            }
         }
 
         private void RenderFrame()

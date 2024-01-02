@@ -9,22 +9,31 @@ namespace FlyeEngine.GraphicsEngine
     {
         private readonly Shader _basicColorShader;
 
-        private readonly Action _update;
+        private readonly Action<float> _update;
         private readonly Action _render;
 
-        public GraphicsEngine(NativeWindowSettings nativeWindowSettings, Action update, Action render, float aspect) : base(GameWindowSettings.Default, nativeWindowSettings)
+        private readonly Matrix4 _projectionMatrix;
+        private Matrix4 _viewMatrix;
+
+        public GraphicsEngine(NativeWindowSettings nativeWindowSettings, Action<float> update, Action render, float aspect) : base(GameWindowSettings.Default, nativeWindowSettings)
         {
             _update = update;
             _render = render;
             _basicColorShader = new Shader("Shaders/SingleColorShader.vert", "Shaders/SingleColorShader.frag");
 
             // Temporary
-            var projMatrix = Matrix4.CreatePerspectiveFieldOfView(float.Pi / 2f, aspect, 0.1f, 1000f);
-            var viewMatrix = Matrix4.Identity;
+            _projectionMatrix = Matrix4.CreatePerspectiveFieldOfView(float.Pi / 2f, aspect, 0.1f, 1000f);
+            _viewMatrix = Matrix4.Identity;
             var modelMatrix = Matrix4.CreateRotationX(float.Pi / 6f) * Matrix4.CreateTranslation(0f, 0f, -5f);
             _basicColorShader.SetMatrix4("modelMatrix", ref modelMatrix);
-            _basicColorShader.SetMatrix4("viewMatrix", ref viewMatrix);
-            _basicColorShader.SetMatrix4("projectionMatrix", ref projMatrix);
+            _basicColorShader.SetMatrix4("viewMatrix", ref _viewMatrix);
+            _basicColorShader.SetMatrix4("projectionMatrix", ref _projectionMatrix);
+        }
+
+        public void UpdateViewMatrix(Matrix4 matrix)
+        {
+            _viewMatrix = matrix;
+            _basicColorShader.SetMatrix4("viewMatrix", ref _viewMatrix);
         }
 
         protected override void OnLoad()
@@ -39,7 +48,7 @@ namespace FlyeEngine.GraphicsEngine
         {
             base.OnUpdateFrame(args);
 
-            _update();
+            _update((float)args.Time);
         }
 
         protected override void OnRenderFrame(FrameEventArgs args)
