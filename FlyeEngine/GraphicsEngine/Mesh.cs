@@ -57,17 +57,23 @@ namespace FlyeEngine.GraphicsEngine
                                 var temp = index.ToList();
                                 temp.RemoveAt(0);
                                 index = temp.ToArray();
-
-                                var line1 = allVertices[1] - allVertices[0];
-                                var line2 = allVertices[2] - allVertices[0];
-                                var normal = Vector3.Cross(line1, line2);
+                                
+                                List<Vector3> vertices = new();
 
                                 for (var i = 0; i < 3; i++)
                                 {
                                     var coords = index[i].Split('/');
-                                    verticesForGpu.Add(allVertices[int.Parse(coords[0]) - 1].X);
-                                    verticesForGpu.Add(allVertices[int.Parse(coords[0]) - 1].Y);
-                                    verticesForGpu.Add(allVertices[int.Parse(coords[0]) - 1].Z);
+                                    vertices.Add(allVertices[int.Parse(coords[0]) - 1]);
+                                }
+                                var line1 = vertices[1] - vertices[0];
+                                var line2 = vertices[2] - vertices[0];
+                                var normal = Vector3.Cross(line1, line2);
+
+                                foreach (var vertex in vertices)
+                                {
+                                    verticesForGpu.Add(vertex.X);
+                                    verticesForGpu.Add(vertex.Y);
+                                    verticesForGpu.Add(vertex.Z);
                                     verticesForGpu.Add(normal.X);
                                     verticesForGpu.Add(normal.Y);
                                     verticesForGpu.Add(normal.Z);
@@ -77,10 +83,10 @@ namespace FlyeEngine.GraphicsEngine
                             {
                                 var index = line.Split(' ');
 
-                                var line1 = allVertices[2] - allVertices[1];
-                                var line2 = allVertices[3] - allVertices[1];
+                                var line1 = allVertices[int.Parse(index[2]) - 1] - allVertices[int.Parse(index[1]) -1];
+                                var line2 = allVertices[int.Parse(index[3]) - 1] - allVertices[int.Parse(index[1]) - 1];
                                 var normal = Vector3.Cross(line1, line2);
-
+                                
                                 for (var i = 1; i < 4; i++)
                                 {
                                     verticesForGpu.Add(allVertices[int.Parse(index[i]) - 1].X);

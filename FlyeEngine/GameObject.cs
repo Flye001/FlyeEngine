@@ -41,7 +41,7 @@ namespace FlyeEngine
 
         public Matrix4 ModelMatrix { get; private set; }
         public Matrix3 ModelNormalMatrix { get; private set; }
-        
+
 
         private readonly Mesh? _mesh;
         public ShaderTypeEnum ShaderType { get; }
@@ -72,11 +72,12 @@ namespace FlyeEngine
 
         private void UpdateModelMatrix()
         {
-            ModelMatrix = Matrix4.CreateTranslation(Position) 
-                          * Matrix4.CreateRotationX(Rotation.X) 
-                          * Matrix4.CreateRotationX(Rotation.Y) 
-                          * Matrix4.CreateRotationX(Rotation.Z) 
-                          * Matrix4.CreateScale(Scale);
+            ModelMatrix =
+                Matrix4.CreateRotationX(Rotation.X)
+                * Matrix4.CreateRotationY(Rotation.Y)
+                * Matrix4.CreateRotationZ(Rotation.Z)
+                * Matrix4.CreateTranslation(Position)
+                * Matrix4.CreateScale(Scale);
             ModelNormalMatrix = new Matrix3(Matrix4.Transpose(Matrix4.Invert(ModelMatrix)));
         }
 

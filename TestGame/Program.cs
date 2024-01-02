@@ -11,7 +11,7 @@ namespace TestGame
             Console.WriteLine("Hello, World!");
             var game = new FlyeEngine.FlyeEngine(1920, 1080, "Test Game");
 
-            game.LightPosition = new Vector3(0, 30.0f, 0f);
+            game.LightPosition = new Vector3(0, 30f, 0f);
 
             // Add game objects
             Transform objTrans = new()
@@ -20,11 +20,11 @@ namespace TestGame
                 Rotation = Vector3.Zero,
                 Scale = new Vector3(1f)
             };
-            game.AddGameObjectWithMesh(objTrans, "MyObjects/cube.obj", ShaderTypeEnum.SingleColor, new Vector3(1f, 0.2f, 0.6f));
+            game.AddGameObjectWithMesh(objTrans, "MyObjects/cube.obj", ShaderTypeEnum.SingleColorWithLight, new Vector3(1f, 0.2f, 0.6f));
             
             Transform mountainTransform = new()
             {
-                Position = new Vector3(0f, -15f, 5f),
+                Position = new Vector3(10f, -15f, 30f),
                 Rotation = Vector3.Zero,
                 Scale = new Vector3(1f)
             };
@@ -32,13 +32,19 @@ namespace TestGame
 
             Transform planeTrans = new()
             {
-                Position = new Vector3(250, 250, 0),
+                Position = new Vector3(250, 250, 10000),
                 Rotation = Vector3.Zero,
                 Scale = new Vector3(0.01f)
             };
             game.AddGameObjectWithMesh(planeTrans, "MyObjects/airplane.obj", ShaderTypeEnum.SingleColorWithLight, new Vector3(1f));
 
-
+            Transform lightT = new()
+            {
+                Position = new Vector3(0, 50f, 0f),
+                Rotation = Vector3.Zero,
+                Scale = Vector3.One
+            };
+            game.AddGameObjectWithMesh(lightT, "MyObjects/cube.obj", ShaderTypeEnum.SingleColor, new Vector3(1f, 1f, 0f));
 
             game.StartGame();
         }
