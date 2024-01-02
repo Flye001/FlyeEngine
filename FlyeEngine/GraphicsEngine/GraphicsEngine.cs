@@ -20,9 +20,19 @@ namespace FlyeEngine.GraphicsEngine
             _update = update;
             _render = render;
 
-            _shaders = new Dictionary<ShaderTypeEnum, Shader>();
-            _shaders.Add(ShaderTypeEnum.SingleColor, new Shader("Engine/Shaders/SingleColorShader.vert", "Engine/Shaders/SingleColorShader.frag"));
-            _shaders.Add(ShaderTypeEnum.SingleColorWithLight, new Shader("Engine/Shaders/SingleColorShader.vert", "Engine/Shaders/SingleColorWithLightShader.frag"));
+            _shaders = new Dictionary<ShaderTypeEnum, Shader>
+            {
+                {
+                    ShaderTypeEnum.SingleColor,
+                    new Shader("Engine/Shaders/SingleColorShader.vert", "Engine/Shaders/SingleColorShader.frag")
+                },
+                {
+                    ShaderTypeEnum.SingleColorWithLight,
+                    new Shader("Engine/Shaders/SingleColorShader.vert",
+                        "Engine/Shaders/SingleColorWithLightShader.frag")
+                },
+                { ShaderTypeEnum.Texture, new Shader("Engine/Shaders/SingleColorShader.vert", "Engine/Shaders/TextureShader.frag") }
+            };
 
             // Temporary
             _projectionMatrix = Matrix4.CreatePerspectiveFieldOfView(float.Pi / 2f, aspect, 0.1f, 1000f);
@@ -95,6 +105,9 @@ namespace FlyeEngine.GraphicsEngine
 
             GL.ClearColor(0f, 0f, 0f, 1f);
             GL.Enable(EnableCap.DepthTest);
+
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToBorder);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToBorder);
         }
 
         protected override void OnUpdateFrame(FrameEventArgs args)

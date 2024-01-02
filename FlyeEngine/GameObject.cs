@@ -44,6 +44,7 @@ namespace FlyeEngine
 
 
         private readonly Mesh? _mesh;
+        private readonly Texture? _texture;
         public ShaderTypeEnum ShaderType { get; }
         public Vector3 Color { get; }
 
@@ -68,6 +69,19 @@ namespace FlyeEngine
             UpdateModelMatrix();
         }
 
+        public GameObject(Vector3 position, Vector3 rotation, Vector3 scale, Mesh mesh, Texture texture, ShaderTypeEnum shader)
+        {
+            _position = position;
+            _rotation = rotation;
+            _scale = scale;
+            _mesh = mesh;
+            _texture = texture;
+            ShaderType = shader;
+            Color = Vector3.One;
+
+            UpdateModelMatrix();
+        }
+
         private void UpdateModelMatrix()
         {
             ModelMatrix =
@@ -83,6 +97,7 @@ namespace FlyeEngine
 
         public void Render()
         {
+            _texture?.Use();
             _mesh?.Draw();
         }
     }

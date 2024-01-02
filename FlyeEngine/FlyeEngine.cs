@@ -33,6 +33,7 @@ namespace FlyeEngine
 
         private readonly ICamera _gameCamera;
         private readonly Dictionary<string, Mesh> _meshCollection;
+        private readonly Dictionary<string, Texture> _textureCollection;
         private readonly List<GameObject> _sceneObjects;
 
         private Vector3 _lightPosition;
@@ -72,8 +73,9 @@ namespace FlyeEngine
                 _gameCamera = new BasicCamera(_screen_aspect_ration, Vector3.Zero);
                 _graphicsEngine.CursorState = CursorState.Grabbed;
             }
-            _sceneObjects = new();
-            _meshCollection = new();
+            _sceneObjects = new List<GameObject>();
+            _meshCollection = new Dictionary<string, Mesh>();
+            _textureCollection = new Dictionary<string, Texture>();
 
             _lightPosition = Vector3.Zero;
             _graphicsEngine.SetShaderUniformVector3("lightPosition", _lightPosition);
@@ -116,11 +118,25 @@ namespace FlyeEngine
 
         public void AddGameObjectWithMesh(Transform transform, string meshFilePath, ShaderTypeEnum shaderType, Vector3 objectColor)
         {
-            if (! _meshCollection.ContainsKey(meshFilePath))
+            if (!_meshCollection.ContainsKey(meshFilePath))
             {
                 _meshCollection.Add(meshFilePath, new Mesh(meshFilePath));
             }
             _sceneObjects.Add(new GameObject(transform.Position, transform.Rotation, transform.Scale, _meshCollection[meshFilePath], shaderType, objectColor));
+        }
+
+        public void AddGameObjectWithTexture(Transform transform, string meshFilePath, string textureFilePath,
+            ShaderTypeEnum shaderType)
+        {
+            if (!_meshCollection.ContainsKey(meshFilePath))
+            {
+                _meshCollection.Add(meshFilePath, new Mesh(meshFilePath));
+            }
+            if (!_textureCollection.ContainsKey(textureFilePath))
+            {
+                _textureCollection.Add(textureFilePath, new Texture(textureFilePath));
+            }
+            _sceneObjects.Add(new GameObject(transform.Position, transform.Rotation, transform.Scale, _meshCollection[meshFilePath], _textureCollection[textureFilePath], shaderType));
         }
 
         public void StartGame()

@@ -26,6 +26,8 @@ namespace FlyeEngine.GraphicsEngine
             }
 
             List<Vector3> allVertices = new();
+            List<Vector2> allTextures = new();
+
             List<float> verticesForGpu = new();
             foreach (var line in fileContent)
             {
@@ -38,9 +40,8 @@ namespace FlyeEngine.GraphicsEngine
                             if (line[1] == 't')
                             {
                                 // Texture
-                                //throw new NotImplementedException();
-                                //var vertex = line.Split(' ');
-                                //tempTextures.Add(new Vector2(float.Parse(vertex[1]), float.Parse(vertex[2])));
+                                var vertex = line.Split(' ');
+                                allTextures.Add(new Vector2(float.Parse(vertex[1]), float.Parse(vertex[2])));
                             }
                             else
                             {
@@ -59,24 +60,28 @@ namespace FlyeEngine.GraphicsEngine
                                 index = temp.ToArray();
                                 
                                 List<Vector3> vertices = new();
+                                List<Vector2> texts = new();
 
                                 for (var i = 0; i < 3; i++)
                                 {
                                     var coords = index[i].Split('/');
                                     vertices.Add(allVertices[int.Parse(coords[0]) - 1]);
+                                    texts.Add(allTextures[int.Parse(coords[1]) - 1]);
                                 }
                                 var line1 = vertices[1] - vertices[0];
                                 var line2 = vertices[2] - vertices[0];
                                 var normal = Vector3.Cross(line1, line2);
 
-                                foreach (var vertex in vertices)
+                                for (var i = 0; i < 3; i++)
                                 {
-                                    verticesForGpu.Add(vertex.X);
-                                    verticesForGpu.Add(vertex.Y);
-                                    verticesForGpu.Add(vertex.Z);
+                                    verticesForGpu.Add(vertices[i].X);
+                                    verticesForGpu.Add(vertices[i].Y);
+                                    verticesForGpu.Add(vertices[i].Z);
                                     verticesForGpu.Add(normal.X);
                                     verticesForGpu.Add(normal.Y);
                                     verticesForGpu.Add(normal.Z);
+                                    verticesForGpu.Add(texts[i].X);
+                                    verticesForGpu.Add(texts[i].Y);
                                 }
                             }
                             else
@@ -95,6 +100,8 @@ namespace FlyeEngine.GraphicsEngine
                                     verticesForGpu.Add(normal.X);
                                     verticesForGpu.Add(normal.Y);
                                     verticesForGpu.Add(normal.Z);
+                                    verticesForGpu.Add(0);
+                                    verticesForGpu.Add(0);
                                 }
                             }
                             break;
@@ -112,11 +119,14 @@ namespace FlyeEngine.GraphicsEngine
             GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject);
 
             // Vertices
-            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 0);
+            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 8 * sizeof(float), 0);
             GL.EnableVertexAttribArray(0);
             // Normals
-            GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 3 * sizeof(float));
+            GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 8 * sizeof(float), 3 * sizeof(float));
             GL.EnableVertexAttribArray(1);
+            // Textures
+            GL.VertexAttribPointer(2, 2, VertexAttribPointerType.Float, false, 8 * sizeof(float), 6 * sizeof(float));
+            GL.EnableVertexAttribArray(2);
 
             var vertexArray = verticesForGpu.ToArray();
             _numOfVertices = vertexArray.Length;
