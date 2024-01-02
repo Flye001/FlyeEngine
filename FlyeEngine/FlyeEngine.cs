@@ -3,6 +3,7 @@ using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
+using System.Reflection;
 
 namespace FlyeEngine
 {
@@ -34,6 +35,17 @@ namespace FlyeEngine
         private readonly Dictionary<string, Mesh> _meshCollection;
         private readonly List<GameObject> _sceneObjects;
 
+        private Vector3 _lightPosition;
+        public Vector3 LightPosition
+        {
+            get => _lightPosition;
+            set
+            {
+                _lightPosition = value;
+                _graphicsEngine.SetShaderUniformVector3("lightPosition", _lightPosition);
+            }
+        }
+
         /// <summary>
         /// Create new game instance
         /// </summary>
@@ -62,6 +74,9 @@ namespace FlyeEngine
             }
             _sceneObjects = new();
             _meshCollection = new();
+
+            _lightPosition = Vector3.Zero;
+            _graphicsEngine.SetShaderUniformVector3("lightPosition", _lightPosition);
         }
 
         private void UpdateFrame(float deltaTime)
@@ -89,6 +104,7 @@ namespace FlyeEngine
                 _graphicsEngine.UseShader(sceneObject.ShaderType);
                 _graphicsEngine.SetShaderUniformVector3(sceneObject.ShaderType, "color", sceneObject.Color);
                 _graphicsEngine.SetShaderUniformMatrix4(sceneObject.ShaderType, "modelMatrix", sceneObject.ModelMatrix);
+                _graphicsEngine.SetShaderUniformMatrix3(sceneObject.ShaderType, "modelNormalMatrix", sceneObject.ModelNormalMatrix);
                 sceneObject.Render();
             }
         }

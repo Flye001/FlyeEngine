@@ -38,7 +38,7 @@ namespace FlyeEngine.GraphicsEngine
                             if (line[1] == 't')
                             {
                                 // Texture
-                                throw new NotImplementedException();
+                                //throw new NotImplementedException();
                                 //var vertex = line.Split(' ');
                                 //tempTextures.Add(new Vector2(float.Parse(vertex[1]), float.Parse(vertex[2])));
                             }
@@ -57,23 +57,38 @@ namespace FlyeEngine.GraphicsEngine
                                 var temp = index.ToList();
                                 temp.RemoveAt(0);
                                 index = temp.ToArray();
+
+                                var line1 = allVertices[1] - allVertices[0];
+                                var line2 = allVertices[2] - allVertices[0];
+                                var normal = Vector3.Cross(line1, line2);
+
                                 for (var i = 0; i < 3; i++)
                                 {
                                     var coords = index[i].Split('/');
                                     verticesForGpu.Add(allVertices[int.Parse(coords[0]) - 1].X);
                                     verticesForGpu.Add(allVertices[int.Parse(coords[0]) - 1].Y);
                                     verticesForGpu.Add(allVertices[int.Parse(coords[0]) - 1].Z);
+                                    verticesForGpu.Add(normal.X);
+                                    verticesForGpu.Add(normal.Y);
+                                    verticesForGpu.Add(normal.Z);
                                 }
                             }
                             else
                             {
                                 var index = line.Split(' ');
 
+                                var line1 = allVertices[2] - allVertices[1];
+                                var line2 = allVertices[3] - allVertices[1];
+                                var normal = Vector3.Cross(line1, line2);
+
                                 for (var i = 1; i < 4; i++)
                                 {
                                     verticesForGpu.Add(allVertices[int.Parse(index[i]) - 1].X);
                                     verticesForGpu.Add(allVertices[int.Parse(index[i]) - 1].Y);
                                     verticesForGpu.Add(allVertices[int.Parse(index[i]) - 1].Z);
+                                    verticesForGpu.Add(normal.X);
+                                    verticesForGpu.Add(normal.Y);
+                                    verticesForGpu.Add(normal.Z);
                                 }
                             }
                             break;
@@ -91,8 +106,11 @@ namespace FlyeEngine.GraphicsEngine
             GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject);
 
             // Vertices
-            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
+            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 0);
             GL.EnableVertexAttribArray(0);
+            // Normals
+            GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 3 * sizeof(float));
+            GL.EnableVertexAttribArray(1);
 
             var vertexArray = verticesForGpu.ToArray();
             _numOfVertices = vertexArray.Length;

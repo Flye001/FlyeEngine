@@ -22,6 +22,7 @@ namespace FlyeEngine.GraphicsEngine
 
             _shaders = new Dictionary<ShaderTypeEnum, Shader>();
             _shaders.Add(ShaderTypeEnum.SingleColor, new Shader("Shaders/SingleColorShader.vert", "Shaders/SingleColorShader.frag"));
+            _shaders.Add(ShaderTypeEnum.SingleColorWithLight, new Shader("Shaders/SingleColorShader.vert", "Shaders/SingleColorWithLightShader.frag"));
 
             // Temporary
             _projectionMatrix = Matrix4.CreatePerspectiveFieldOfView(float.Pi / 2f, aspect, 0.1f, 1000f);
@@ -62,6 +63,14 @@ namespace FlyeEngine.GraphicsEngine
             _shaders[shaderType].SetVector3(propertyName, ref propertyValue);
         }
 
+        public void SetShaderUniformVector3(string propertyName, Vector3 propertyValue)
+        {
+            foreach (var shader in _shaders.Values)
+            {
+                shader.SetVector3(propertyName, ref propertyValue);
+            }
+        }
+
         public void SetShaderUniformMatrix4(ShaderTypeEnum shaderType, string propertyName, Matrix4 propertyValue)
         {
             if (!_shaders.ContainsKey(shaderType))
@@ -69,6 +78,15 @@ namespace FlyeEngine.GraphicsEngine
                 throw new KeyNotFoundException($"Could not find shader for '{shaderType}'!");
             }
             _shaders[shaderType].SetMatrix4(propertyName, ref propertyValue);
+        }
+
+        public void SetShaderUniformMatrix3(ShaderTypeEnum shaderType, string propertyName, Matrix3 propertyValue)
+        {
+            if (!_shaders.ContainsKey(shaderType))
+            {
+                throw new KeyNotFoundException($"Could not find shader for '{shaderType}'!");
+            }
+            _shaders[shaderType].SetMatrix3(propertyName, ref propertyValue);
         }
 
         protected override void OnLoad()

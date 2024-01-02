@@ -1,5 +1,6 @@
 ﻿using FlyeEngine.GraphicsEngine;
 using OpenTK.Mathematics;
+using System.Reflection;
 
 namespace FlyeEngine
 {
@@ -39,6 +40,7 @@ namespace FlyeEngine
         }
 
         public Matrix4 ModelMatrix { get; private set; }
+        public Matrix3 ModelNormalMatrix { get; private set; }
         
 
         private readonly Mesh? _mesh;
@@ -52,6 +54,7 @@ namespace FlyeEngine
             _scale = scale;
 
             ModelMatrix = Matrix4.CreateTranslation(Position) * Matrix4.CreateRotationX(Rotation.X) * Matrix4.CreateRotationX(Rotation.Y) * Matrix4.CreateRotationX(Rotation.Z) * Matrix4.CreateScale(Scale);
+            ModelNormalMatrix = new Matrix3(Matrix4.Transpose(Matrix4.Invert(ModelMatrix)));
         }
 
         public GameObject(Vector3 position, Vector3 rotation, Vector3 scale, Mesh mesh, ShaderTypeEnum shader, Vector3 color)
@@ -64,6 +67,7 @@ namespace FlyeEngine
             Color = color;
 
             ModelMatrix = Matrix4.CreateTranslation(Position) * Matrix4.CreateRotationX(Rotation.X) * Matrix4.CreateRotationX(Rotation.Y) * Matrix4.CreateRotationX(Rotation.Z) * Matrix4.CreateScale(Scale);
+            ModelNormalMatrix = new Matrix3(Matrix4.Transpose(Matrix4.Invert(ModelMatrix)));
         }
 
         private void UpdateModelMatrix()
@@ -73,6 +77,7 @@ namespace FlyeEngine
                           * Matrix4.CreateRotationX(Rotation.Y) 
                           * Matrix4.CreateRotationX(Rotation.Z) 
                           * Matrix4.CreateScale(Scale);
+            ModelNormalMatrix = new Matrix3(Matrix4.Transpose(Matrix4.Invert(ModelMatrix)));
         }
 
         public void Render()
