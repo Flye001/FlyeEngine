@@ -1,13 +1,12 @@
 ﻿using FlyeEngine.GraphicsEngine;
 using OpenTK.Mathematics;
-using System.Reflection;
 
 namespace FlyeEngine
 {
-    internal class GameObject
+    public class GameObject
     {
         private Vector3 _position;
-        private Vector3 Position
+        public Vector3 Position
         {
             get => _position;
             set
@@ -18,7 +17,7 @@ namespace FlyeEngine
         }
 
         private Vector3 _rotation;
-        private Vector3 Rotation
+        public Vector3 Rotation
         {
             get => _rotation;
             set
@@ -29,7 +28,7 @@ namespace FlyeEngine
         }
 
         private Vector3 _scale;
-        private Vector3 Scale
+        public Vector3 Scale
         {
             get => _scale;
             set

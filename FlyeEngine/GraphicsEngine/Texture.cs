@@ -4,7 +4,7 @@ using StbImageSharp;
 
 namespace FlyeEngine.GraphicsEngine
 {
-    internal class Texture
+    public class Texture
     {
         public int Handle { get; }
 

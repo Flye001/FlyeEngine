@@ -6,7 +6,7 @@ namespace FlyeEngine.GraphicsEngine
     /// <summary>
     /// Object that creates / stores a vertex buffer of all vertices for a given model
     /// </summary>
-    internal class Mesh
+    public class Mesh
     {
         private readonly int _vertexArrayObject;
         private readonly int _vertexBufferObject;

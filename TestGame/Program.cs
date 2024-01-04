@@ -6,12 +6,16 @@ namespace TestGame
 {
     internal class Program
     {
+        private static GameObject plane;
+        private static bool forward = true;
         static void Main(string[] args)
         {
             Console.WriteLine("Hello, World!");
             var game = new FlyeEngine.FlyeEngine(1920, 1080, "Test Game");
 
             game.LightPosition = new Vector3(0, 30f, 0f);
+
+            game.OnUpdate += OnUpdate;
 
             // Add game objects
             //Transform objTrans = new()
@@ -37,7 +41,7 @@ namespace TestGame
                 Scale = new Vector3(0.01f)
             };
             Transform boring = new() { Position = Vector3.Zero, Rotation = Vector3.Zero, Scale = new Vector3(0.01f) };
-            game.AddGameObjectWithTexture(planeTrans, "MyObjects/airplane.obj", "MyTextures/airplane.png", ShaderTypeEnum.Texture);
+            plane = game.AddGameObjectWithTexture(planeTrans, "MyObjects/airplane.obj", "MyTextures/airplane.png", ShaderTypeEnum.Texture);
 
             //Transform lightT = new()
             //{
@@ -53,6 +57,30 @@ namespace TestGame
 
 
             game.StartGame();
+        }
+
+        private static void OnUpdate()
+        {
+            if (plane.Position.X >= 40)
+            {
+                forward = false;
+                plane.Rotation = new Vector3(0, -float.Pi / 2f, -float.Pi / 9f);
+            }
+
+            if (plane.Position.X <= -40)
+            {
+                forward = true;
+                plane.Rotation = new Vector3(0, float.Pi / 2f, -float.Pi / 9f);
+            }
+
+            if (forward)
+            {
+                plane.Position += new Vector3(0.5f, 0f, 0f);
+            }
+            else
+            {
+                plane.Position += new Vector3(-0.5f, 0f, 0f);
+            }
         }
     }
 }

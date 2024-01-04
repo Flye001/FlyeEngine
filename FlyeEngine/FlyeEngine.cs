@@ -36,6 +36,8 @@ namespace FlyeEngine
         private readonly Dictionary<string, Texture> _textureCollection;
         private readonly List<GameObject> _sceneObjects;
 
+        public Action OnUpdate;
+
         private Vector3 _lightPosition;
         public Vector3 LightPosition
         {
@@ -97,6 +99,8 @@ namespace FlyeEngine
                 _gameCamera.HandleInput(keyboardState, mouseState, deltaTime);
                 _graphicsEngine.UpdateViewMatrix(_gameCamera.GetViewMatrix());
             }
+
+            OnUpdate();
         }
 
         private void RenderFrame()
@@ -111,21 +115,27 @@ namespace FlyeEngine
             }
         }
 
-        public void AddGameObject(Transform transform)
+        public GameObject AddGameObject(Transform transform)
         {
-            _sceneObjects.Add(new GameObject(transform.Position, transform.Rotation, transform.Scale));
+            var obj = new GameObject(transform.Position, transform.Rotation, transform.Scale);
+            _sceneObjects.Add(obj);
+            return obj;
         }
 
-        public void AddGameObjectWithMesh(Transform transform, string meshFilePath, ShaderTypeEnum shaderType, Vector3 objectColor)
+        public GameObject AddGameObjectWithMesh(Transform transform, string meshFilePath, ShaderTypeEnum shaderType, Vector3 objectColor)
         {
             if (!_meshCollection.ContainsKey(meshFilePath))
             {
                 _meshCollection.Add(meshFilePath, new Mesh(meshFilePath));
             }
-            _sceneObjects.Add(new GameObject(transform.Position, transform.Rotation, transform.Scale, _meshCollection[meshFilePath], shaderType, objectColor));
+
+            var obj = new GameObject(transform.Position, transform.Rotation, transform.Scale,
+                _meshCollection[meshFilePath], shaderType, objectColor);
+            _sceneObjects.Add(obj);
+            return obj;
         }
 
-        public void AddGameObjectWithTexture(Transform transform, string meshFilePath, string textureFilePath,
+        public GameObject AddGameObjectWithTexture(Transform transform, string meshFilePath, string textureFilePath,
             ShaderTypeEnum shaderType)
         {
             if (!_meshCollection.ContainsKey(meshFilePath))
@@ -136,7 +146,11 @@ namespace FlyeEngine
             {
                 _textureCollection.Add(textureFilePath, new Texture(textureFilePath));
             }
-            _sceneObjects.Add(new GameObject(transform.Position, transform.Rotation, transform.Scale, _meshCollection[meshFilePath], _textureCollection[textureFilePath], shaderType));
+
+            var obj = new GameObject(transform.Position, transform.Rotation, transform.Scale,
+                _meshCollection[meshFilePath], _textureCollection[textureFilePath], shaderType);
+            _sceneObjects.Add(obj);
+            return obj;
         }
 
         public void StartGame()
