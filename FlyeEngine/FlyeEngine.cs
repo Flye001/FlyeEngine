@@ -108,7 +108,6 @@ namespace FlyeEngine
             foreach (var sceneObject in _sceneObjects)
             {
                 _graphicsEngine.UseShader(sceneObject.ShaderType);
-                _graphicsEngine.SetShaderUniformVector3(sceneObject.ShaderType, "color", sceneObject.Color);
                 _graphicsEngine.SetShaderUniformMatrix4(sceneObject.ShaderType, "modelMatrix", sceneObject.ModelMatrix);
                 _graphicsEngine.SetShaderUniformMatrix3(sceneObject.ShaderType, "modelNormalMatrix", sceneObject.ModelNormalMatrix);
                 sceneObject.Render();
@@ -135,7 +134,7 @@ namespace FlyeEngine
             return obj;
         }
 
-        public GameObject AddGameObjectWithMesh(Transform transform, string meshFilePath, ShaderTypeEnum shaderType, Vector3 objectColor)
+        public GameObject AddGameObjectWithMesh(Transform transform, string meshFilePath, ShaderTypeEnum shaderType)
         {
             if (!_meshCollection.ContainsKey(meshFilePath))
             {
@@ -143,7 +142,7 @@ namespace FlyeEngine
             }
 
             var obj = new GameObject(transform.Position, transform.Rotation, transform.Scale,
-                _meshCollection[meshFilePath], shaderType, objectColor);
+                _meshCollection[meshFilePath], shaderType);
             _sceneObjects.Add(obj);
             return obj;
         }

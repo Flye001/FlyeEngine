@@ -56,7 +56,7 @@ namespace TestGame
             //game.AddGameObjectWithMesh(spyroTransform, "MyObjects/3dcircle.obj", ShaderTypeEnum.SingleColorWithLight, new(1f, 0.3f, 0.2f));
 
             game.AddGameObjectFromWavefront(new Transform(), "MyObjects/harrypotter",
-                ShaderTypeEnum.SingleColorWithLight);
+                ShaderTypeEnum.SingleColor);
 
             game.StartGame();
         }

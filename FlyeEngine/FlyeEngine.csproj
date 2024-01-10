@@ -13,14 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Engine\Shaders\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Engine\Shaders\SingleColorShader.frag">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Engine\Shaders\SingleColorShader.vert">
+    <None Update="Engine\Shaders\MainVertexShader.vert">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Engine\Shaders\SingleColorWithLightShader.frag">

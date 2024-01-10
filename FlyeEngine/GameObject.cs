@@ -45,7 +45,6 @@ namespace FlyeEngine
         private readonly Mesh? _mesh;
         private readonly Texture? _texture;
         public ShaderTypeEnum ShaderType { get; }
-        public Vector3 Color { get; }
 
         public GameObject(Vector3 position, Vector3 rotation, Vector3 scale)
         {
@@ -63,23 +62,10 @@ namespace FlyeEngine
             _scale = scale;
             _mesh = mesh;
             ShaderType = shader;
-            Color = Vector3.One;
 
             UpdateModelMatrix();
         }
-
-        public GameObject(Vector3 position, Vector3 rotation, Vector3 scale, Mesh mesh, ShaderTypeEnum shader, Vector3 color)
-        {
-            _position = position;
-            _rotation = rotation;
-            _scale = scale;
-            _mesh = mesh;
-            ShaderType = shader;
-            Color = color;
-
-            UpdateModelMatrix();
-        }
-
+        
         public GameObject(Vector3 position, Vector3 rotation, Vector3 scale, Mesh mesh, Texture texture, ShaderTypeEnum shader)
         {
             _position = position;
@@ -88,7 +74,6 @@ namespace FlyeEngine
             _mesh = mesh;
             _texture = texture;
             ShaderType = shader;
-            Color = Vector3.One;
 
             UpdateModelMatrix();
         }
