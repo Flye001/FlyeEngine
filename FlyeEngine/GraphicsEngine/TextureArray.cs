@@ -40,14 +40,12 @@ namespace FlyeEngine.GraphicsEngine
 
                     pixels.AddRange(image.Data);
 
-                    //GL.TexStorage3D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, image.Width, image.Height, 0,
-                    //    PixelFormat.Rgba, PixelType.UnsignedByte, image.Data);
                 }
-                GL.TexStorage3D(TextureTarget3d.Texture2DArray, 1, SizedInternalFormat.Rgba8, dimensions.Item1, dimensions.Item2, texturePath.Length);
             }
+            GL.TexStorage3D(TextureTarget3d.Texture2DArray, 1, SizedInternalFormat.Rgba8, dimensions.Item1, dimensions.Item2, texturePaths.Count);
+            GL.TexSubImage3D(TextureTarget.Texture2DArray, 0, 0, 0, 0, dimensions.Item1, dimensions.Item2, texturePaths.Count, PixelFormat.Rgba, PixelType.UnsignedByte, pixels.ToArray());
 
-            
-            GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
+            GL.GenerateMipmap(GenerateMipmapTarget.Texture2DArray);
         }
 
         public void Use(TextureUnit target = TextureUnit.Texture0)

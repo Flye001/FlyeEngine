@@ -57,7 +57,7 @@ namespace TestGame
                 Rotation = new Vector3(0, float.Pi, 0f),
                 Scale = new Vector3(15f)
             };
-            game.AddGameObjectFromWavefront(peachTrans, "MyObjects\\peach", ShaderTypeEnum.Texture);
+            //game.AddGameObjectFromWavefront(peachTrans, "MyObjects\\peach", ShaderTypeEnum.Texture);
 
             Transform planeTrans = new()
             {
@@ -65,7 +65,7 @@ namespace TestGame
                 Rotation = new Vector3(0, float.Pi / 2f, float.Pi / 2f),
                 Scale = new Vector3(0.1f)
             };
-            //game.AddGameObjectFromWavefront(planeTrans, "MyObjects\\plane2", ShaderTypeEnum.Texture);
+            game.AddGameObjectFromWavefront(planeTrans, "MyObjects\\plane2", ShaderTypeEnum.Texture);
 
 
             Transform spyroTransform = new()

@@ -132,14 +132,14 @@ namespace FlyeEngine
                 _graphicsEngine.SetShaderUniformMatrix3(sceneObject.ShaderType, "modelNormalMatrix", sceneObject.ModelNormalMatrix);
                 
                 // Set textures
-                var texs = sceneObject.GetTextures();
-                if (texs != null)
-                {
-                    foreach (var i in texs)
-                    {
-                        _textureCollection[i.Key].Use(_textureMappings[i.Value]);
-                    }
-                }
+                //var texs = sceneObject.GetTextures();
+                //if (texs != null)
+                //{
+                //    foreach (var i in texs)
+                //    {
+                //        _textureCollection[i.Key].Use(_textureMappings[i.Value]);
+                //    }
+                //}
                 
                 sceneObject.Render();
             }
