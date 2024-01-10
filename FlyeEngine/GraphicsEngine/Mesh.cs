@@ -98,13 +98,28 @@ namespace FlyeEngine.GraphicsEngine
                         {
                             var tempVertices = new List<Vector3>(3);
                             var tempTextures = new List<Vector2>(3);
-
-                            for (var i = 1; i <= 3; i++)
+                            var textureLayerId = 0;
+                            if (splitLine[1].Contains("//"))
                             {
-                                var tempLine = splitLine[i].Split('/');
-                                tempVertices.Add(allVertices[int.Parse(tempLine[0]) - 1]);
-                                tempTextures.Add(allTextures[int.Parse(tempLine[1]) - 1]);
+                                for (var i = 1; i <= 3; i++)
+                                {
+                                    var tempLine = splitLine[i].Split("//");
+                                    tempVertices.Add(allVertices[int.Parse(tempLine[0]) - 1]);
+                                    tempTextures.Add(Vector2.Zero);
+                                }
                             }
+                            else
+                            {
+                                for (var i = 1; i <= 3; i++)
+                                {
+                                    var tempLine = splitLine[i].Split('/');
+                                    tempVertices.Add(allVertices[int.Parse(tempLine[0]) - 1]);
+                                    tempTextures.Add(allTextures[int.Parse(tempLine[1]) - 1]);
+                                }
+
+                                textureLayerId = textureCount[currentMaterial.MapKd];
+                            }
+
                             // Calculate Normal
                             var line1 = tempVertices[1] - tempVertices[0];
                             var line2 = tempVertices[2] - tempVertices[0];
@@ -118,7 +133,7 @@ namespace FlyeEngine.GraphicsEngine
                                 gpuVertices.Add(normal.X);
                                 gpuVertices.Add(normal.Y);
                                 gpuVertices.Add(normal.Z);
-                                gpuVertices.Add(textureCount[currentMaterial.MapKd]);
+                                gpuVertices.Add(textureLayerId);
                                 gpuVertices.Add(tempTextures[i].X);
                                 gpuVertices.Add(tempTextures[i].Y);
                                 gpuVertices.Add(currentMaterial.Kd.X);

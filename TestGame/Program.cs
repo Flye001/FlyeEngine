@@ -57,7 +57,7 @@ namespace TestGame
                 Rotation = new Vector3(0, float.Pi, 0f),
                 Scale = new Vector3(15f)
             };
-            //game.AddGameObjectFromWavefront(peachTrans, "MyObjects\\peach", ShaderTypeEnum.Texture);
+            game.AddGameObjectFromWavefront(peachTrans, "MyObjects\\peach", ShaderTypeEnum.Texture);
 
             Transform planeTrans = new()
             {
@@ -72,12 +72,12 @@ namespace TestGame
             {
                 Position = new Vector3(0, 0, 0)
             };
-            //game.AddGameObjectFromWavefront(spyroTransform, "MyObjects\\spyro", ShaderTypeEnum.Texture);
-            
-            //game.AddGameObjectWithMesh(spyroTransform, "MyObjects/3dcircle.obj", ShaderTypeEnum.SingleColorWithLight, new(1f, 0.3f, 0.2f));
+            game.AddGameObjectFromWavefront(spyroTransform, "MyObjects\\spyro", ShaderTypeEnum.Texture);
 
-            //game.AddGameObjectFromWavefront(new Transform(), "MyObjects\\harrypotter",
-            //ShaderTypeEnum.SingleColor);
+
+            game.AddGameObjectFromWavefront(new Transform() {Position = new(0,1,-20)}, "MyObjects\\harrypotter", ShaderTypeEnum.SingleColorWithLight);
+
+            game.AddGameObjectFromWavefront(new Transform(), "MyObjects\\cottage", ShaderTypeEnum.Texture);
 
             game.StartGame();
         }

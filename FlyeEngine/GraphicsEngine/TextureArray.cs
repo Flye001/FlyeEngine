@@ -51,7 +51,7 @@ namespace FlyeEngine.GraphicsEngine
         public void Use(TextureUnit target = TextureUnit.Texture0)
         {
             GL.ActiveTexture(target);
-            GL.BindTexture(TextureTarget.Texture2D, Handle);
+            GL.BindTexture(TextureTarget.Texture2DArray, Handle);
         }
     }
 }
