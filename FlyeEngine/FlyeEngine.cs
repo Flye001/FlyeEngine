@@ -122,6 +122,19 @@ namespace FlyeEngine
             return obj;
         }
 
+        public GameObject AddGameObjectFromWavefront(Transform transform, string meshFilePath,
+            ShaderTypeEnum shaderType)
+        {
+            if (!_meshCollection.ContainsKey(meshFilePath))
+            {
+                _meshCollection.Add(meshFilePath, Mesh.LoadFullWavefrontFile(meshFilePath));
+            }
+            var obj = new GameObject(transform.Position, transform.Rotation, transform.Scale,
+                _meshCollection[meshFilePath], shaderType);
+            _sceneObjects.Add(obj);
+            return obj;
+        }
+
         public GameObject AddGameObjectWithMesh(Transform transform, string meshFilePath, ShaderTypeEnum shaderType, Vector3 objectColor)
         {
             if (!_meshCollection.ContainsKey(meshFilePath))

@@ -56,6 +56,18 @@ namespace FlyeEngine
             UpdateModelMatrix();
         }
 
+        public GameObject(Vector3 position, Vector3 rotation, Vector3 scale, Mesh mesh, ShaderTypeEnum shader)
+        {
+            _position = position;
+            _rotation = rotation;
+            _scale = scale;
+            _mesh = mesh;
+            ShaderType = shader;
+            Color = Vector3.One;
+
+            UpdateModelMatrix();
+        }
+
         public GameObject(Vector3 position, Vector3 rotation, Vector3 scale, Mesh mesh, ShaderTypeEnum shader, Vector3 color)
         {
             _position = position;

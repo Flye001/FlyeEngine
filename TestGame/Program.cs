@@ -34,14 +34,14 @@ namespace TestGame
             //};
             //game.AddGameObjectWithMesh(mountainTransform, "MyObjects/mountains.obj", ShaderTypeEnum.SingleColorWithLight, new Vector3(0.7f, 0.4f, 0.1f));
 
-            Transform planeTrans = new()
-            {
-                Position = new Vector3(-40, 20, -50),
-                Rotation = new Vector3(0, float.Pi / 2f, -float.Pi / 9f),
-                Scale = new Vector3(0.01f)
-            };
-            Transform boring = new() { Position = Vector3.Zero, Rotation = Vector3.Zero, Scale = new Vector3(0.01f) };
-            plane = game.AddGameObjectWithTexture(planeTrans, "MyObjects/airplane.obj", "MyTextures/airplane.png", ShaderTypeEnum.Texture);
+            //Transform planeTrans = new()
+            //{
+            //    Position = new Vector3(-40, 20, -50),
+            //    Rotation = new Vector3(0, float.Pi / 2f, -float.Pi / 9f),
+            //    Scale = new Vector3(0.01f)
+            //};
+            //Transform boring = new() { Position = Vector3.Zero, Rotation = Vector3.Zero, Scale = new Vector3(0.01f) };
+            //plane = game.AddGameObjectWithTexture(planeTrans, "MyObjects/airplane.obj", "MyTextures/airplane.png", ShaderTypeEnum.Texture);
 
             //Transform lightT = new()
             //{
@@ -51,36 +51,38 @@ namespace TestGame
             //};
             //game.AddGameObjectWithMesh(lightT, "MyObjects/cube.obj", ShaderTypeEnum.SingleColor, new Vector3(1f, 1f, 0f));
 
-            Transform spyroTransform = new();
-            game.AddGameObjectWithTexture(spyroTransform, "MyObjects/spyro.obj", "MyTextures/spyro.png", ShaderTypeEnum.Texture);
-            game.AddGameObjectWithMesh(spyroTransform, "MyObjects/3dcircle.obj", ShaderTypeEnum.SingleColorWithLight, new(1f, 0.3f, 0.2f));
+            //Transform spyroTransform = new();
+            //game.AddGameObjectWithTexture(spyroTransform, "MyObjects/spyro.obj", "MyTextures/spyro.png", ShaderTypeEnum.Texture);
+            //game.AddGameObjectWithMesh(spyroTransform, "MyObjects/3dcircle.obj", ShaderTypeEnum.SingleColorWithLight, new(1f, 0.3f, 0.2f));
 
+            game.AddGameObjectFromWavefront(new Transform(), "MyObjects/harrypotter",
+                ShaderTypeEnum.SingleColorWithLight);
 
             game.StartGame();
         }
 
         private static void OnUpdate()
         {
-            if (plane.Position.X >= 40)
-            {
-                forward = false;
-                plane.Rotation = new Vector3(0, -float.Pi / 2f, -float.Pi / 9f);
-            }
+            //if (plane.Position.X >= 40)
+            //{
+            //    forward = false;
+            //    plane.Rotation = new Vector3(0, -float.Pi / 2f, -float.Pi / 9f);
+            //}
 
-            if (plane.Position.X <= -40)
-            {
-                forward = true;
-                plane.Rotation = new Vector3(0, float.Pi / 2f, -float.Pi / 9f);
-            }
+            //if (plane.Position.X <= -40)
+            //{
+            //    forward = true;
+            //    plane.Rotation = new Vector3(0, float.Pi / 2f, -float.Pi / 9f);
+            //}
 
-            if (forward)
-            {
-                plane.Position += new Vector3(0.5f, 0f, 0f);
-            }
-            else
-            {
-                plane.Position += new Vector3(-0.5f, 0f, 0f);
-            }
+            //if (forward)
+            //{
+            //    plane.Position += new Vector3(0.5f, 0f, 0f);
+            //}
+            //else
+            //{
+            //    plane.Position += new Vector3(-0.5f, 0f, 0f);
+            //}
         }
     }
 }
