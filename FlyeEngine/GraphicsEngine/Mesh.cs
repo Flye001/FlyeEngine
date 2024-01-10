@@ -13,6 +13,7 @@ namespace FlyeEngine.GraphicsEngine
         private readonly int _vertexBufferObject;
         private readonly int _numOfVertices;
         private readonly Dictionary<string, int> _textures;
+        private readonly TextureArray _texArray;
 
         /// <summary>
         /// 
@@ -176,15 +177,18 @@ namespace FlyeEngine.GraphicsEngine
             var numOfVertices = vertexArray.Length;
             GL.BufferData(BufferTarget.ArrayBuffer, numOfVertices * sizeof(float), vertexArray, BufferUsageHint.StaticDraw);
 
-            return new Mesh(vertexArrayObject, vertexBufferObject, numOfVertices, textureCount);
+            TextureArray texArray = new TextureArray(textureCount);
+
+            return new Mesh(vertexArrayObject, vertexBufferObject, numOfVertices, textureCount, texArray);
         }
 
-        private Mesh(int vertexArrayObject, int vertexBufferObject, int numOfVertices, Dictionary<string, int> textures)
+        private Mesh(int vertexArrayObject, int vertexBufferObject, int numOfVertices, Dictionary<string, int> textures, TextureArray texArray)
         {
             _vertexArrayObject = vertexArrayObject;
             _vertexBufferObject = vertexBufferObject;
             _numOfVertices = numOfVertices;
             _textures = textures;
+            _texArray = texArray;
         }
 
         public Dictionary<string, int> GetTextures()
@@ -194,6 +198,8 @@ namespace FlyeEngine.GraphicsEngine
 
         public void Draw()
         {
+            _texArray.Use();
+
             GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject);
             GL.BindVertexArray(_vertexArrayObject);
 
