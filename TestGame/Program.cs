@@ -20,11 +20,11 @@ namespace TestGame
             // Add game objects
             Transform objTrans = new()
             {
-                Position = new Vector3(-5f, 0f, 15f),
+                Position = new Vector3(-40, 20, -50),
                 Rotation = Vector3.Zero,
-                Scale = new Vector3(1f)
+                Scale = new Vector3(5f)
             };
-            //game.AddGameObjectFromWavefront(objTrans, "MyObjects/cube", ShaderTypeEnum.SingleColor);
+            plane = game.AddGameObjectFromWavefront(objTrans, "MyObjects/cube", ShaderTypeEnum.SingleColor);
 
             //Transform mountainTransform = new()
             //{
@@ -67,33 +67,34 @@ namespace TestGame
             //game.AddGameObjectWithMesh(spyroTransform, "MyObjects/3dcircle.obj", ShaderTypeEnum.SingleColorWithLight, new(1f, 0.3f, 0.2f));
 
             //game.AddGameObjectFromWavefront(new Transform(), "MyObjects\\harrypotter",
-                //ShaderTypeEnum.SingleColor);
+            //ShaderTypeEnum.SingleColor);
 
             game.StartGame();
         }
 
-        private static void OnUpdate()
+        private static void OnUpdate(float deltaTime)
         {
-            //if (plane.Position.X >= 40)
-            //{
-            //    forward = false;
-            //    plane.Rotation = new Vector3(0, -float.Pi / 2f, -float.Pi / 9f);
-            //}
+            var speed = 15f;
+            if (plane.Position.X >= 40)
+            {
+                forward = false;
+                plane.Rotation = new Vector3(0, -float.Pi / 2f, -float.Pi / 9f);
+            }
 
-            //if (plane.Position.X <= -40)
-            //{
-            //    forward = true;
-            //    plane.Rotation = new Vector3(0, float.Pi / 2f, -float.Pi / 9f);
-            //}
+            if (plane.Position.X <= -40)
+            {
+                forward = true;
+                plane.Rotation = new Vector3(0, float.Pi / 2f, -float.Pi / 9f);
+            }
 
-            //if (forward)
-            //{
-            //    plane.Position += new Vector3(0.5f, 0f, 0f);
-            //}
-            //else
-            //{
-            //    plane.Position += new Vector3(-0.5f, 0f, 0f);
-            //}
+            if (forward)
+            {
+                plane.Position += new Vector3(1f, 0f, 0f) * speed * deltaTime;
+            }
+            else
+            {
+                plane.Position += new Vector3(1f, 0f, 0f) * speed * deltaTime;
+            }
         }
     }
 }

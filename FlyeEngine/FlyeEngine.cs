@@ -36,7 +36,7 @@ namespace FlyeEngine
         private readonly Dictionary<string, Texture> _textureCollection;
         private readonly List<GameObject> _sceneObjects;
 
-        public Action OnUpdate;
+        public Action<float> OnUpdate;
 
         private Vector3 _lightPosition;
         public Vector3 LightPosition
@@ -120,7 +120,7 @@ namespace FlyeEngine
                 _graphicsEngine.UpdateViewMatrix(_gameCamera.GetViewMatrix());
             }
             Console.WriteLine(_gameCamera.GetPosition());
-            OnUpdate();
+            OnUpdate(deltaTime);
         }
 
         private void RenderFrame()

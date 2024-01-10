@@ -18,10 +18,10 @@
     <None Update="MyObjects\airplane\object.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="MyObjects\cube.mtl">
+    <None Update="MyObjects\cube\material.mtl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="MyObjects\cube.obj">
+    <None Update="MyObjects\cube\object.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="MyObjects\harrypotter.mtl">
