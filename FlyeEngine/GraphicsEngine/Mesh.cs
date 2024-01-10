@@ -15,7 +15,7 @@ namespace FlyeEngine.GraphicsEngine
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="objectfilePath">Do not include file extension</param>
+        /// <param name="objectFilePath">Do not include file extension</param>
         /// <returns></returns>
         public static Mesh LoadFullWavefrontFile(string objectFilePath)
         {
