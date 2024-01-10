@@ -24,7 +24,7 @@ namespace TestGame
                 Rotation = Vector3.Zero,
                 Scale = new Vector3(5f)
             };
-            plane = game.AddGameObjectFromWavefront(objTrans, "MyObjects/cube", ShaderTypeEnum.SingleColor);
+            //plane = game.AddGameObjectFromWavefront(objTrans, "MyObjects/cube", ShaderTypeEnum.SingleColor);
 
             //Transform mountainTransform = new()
             //{
@@ -55,15 +55,25 @@ namespace TestGame
             {
                 Position = new Vector3(105, -3f, -16f),
                 Rotation = new Vector3(0, float.Pi, 0f),
-                Scale = new Vector3(25f)
+                Scale = new Vector3(15f)
             };
             game.AddGameObjectFromWavefront(peachTrans, "MyObjects\\peach", ShaderTypeEnum.Texture);
+
+            Transform planeTrans = new()
+            {
+                Position = new Vector3(0),
+                Rotation = new Vector3(0, float.Pi / 2f, float.Pi / 2f),
+                Scale = new Vector3(0.1f)
+            };
+            //game.AddGameObjectFromWavefront(planeTrans, "MyObjects\\plane2", ShaderTypeEnum.Texture);
+
 
             Transform spyroTransform = new()
             {
                 Position = new Vector3(0, 0, 0)
             };
-            game.AddGameObjectFromWavefront(spyroTransform, "MyObjects\\spyro", ShaderTypeEnum.Texture);
+            //game.AddGameObjectFromWavefront(spyroTransform, "MyObjects\\spyro", ShaderTypeEnum.Texture);
+            
             //game.AddGameObjectWithMesh(spyroTransform, "MyObjects/3dcircle.obj", ShaderTypeEnum.SingleColorWithLight, new(1f, 0.3f, 0.2f));
 
             //game.AddGameObjectFromWavefront(new Transform(), "MyObjects\\harrypotter",
@@ -74,27 +84,27 @@ namespace TestGame
 
         private static void OnUpdate(float deltaTime)
         {
-            var speed = 15f;
-            if (plane.Position.X >= 40)
-            {
-                forward = false;
-                plane.Rotation = new Vector3(0, -float.Pi / 2f, -float.Pi / 9f);
-            }
+            //var speed = 15f;
+            //if (plane.Position.X >= 40)
+            //{
+            //    forward = false;
+            //    plane.Rotation = new Vector3(0, -float.Pi / 2f, -float.Pi / 9f);
+            //}
 
-            if (plane.Position.X <= -40)
-            {
-                forward = true;
-                plane.Rotation = new Vector3(0, float.Pi / 2f, -float.Pi / 9f);
-            }
+            //if (plane.Position.X <= -40)
+            //{
+            //    forward = true;
+            //    plane.Rotation = new Vector3(0, float.Pi / 2f, -float.Pi / 9f);
+            //}
 
-            if (forward)
-            {
-                plane.Position += new Vector3(1f, 0f, 0f) * speed * deltaTime;
-            }
-            else
-            {
-                plane.Position += new Vector3(1f, 0f, 0f) * speed * deltaTime;
-            }
+            //if (forward)
+            //{
+            //    plane.Position += new Vector3(1f, 0f, 0f) * speed * deltaTime;
+            //}
+            //else
+            //{
+            //    plane.Position += new Vector3(1f, 0f, 0f) * speed * deltaTime;
+            //}
         }
     }
 }

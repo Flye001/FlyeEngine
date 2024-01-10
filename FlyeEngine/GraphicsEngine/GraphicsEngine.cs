@@ -31,7 +31,8 @@ namespace FlyeEngine.GraphicsEngine
                     new Shader("Engine/Shaders/MainVertexShader.vert",
                         "Engine/Shaders/SingleColorWithLightShader.frag")
                 },
-                { ShaderTypeEnum.Texture, 
+                { 
+                    ShaderTypeEnum.Texture, 
                     new Shader("Engine/Shaders/MainVertexShader.vert", "Engine/Shaders/TextureShader.frag")
                 }
             };
