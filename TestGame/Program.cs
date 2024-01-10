@@ -18,13 +18,13 @@ namespace TestGame
             game.OnUpdate += OnUpdate;
 
             // Add game objects
-            //Transform objTrans = new()
-            //{
-            //    Position = new Vector3(-5f, 0f, 15f),
-            //    Rotation = Vector3.Zero,
-            //    Scale = new Vector3(1f)
-            //};
-            //game.AddGameObjectWithMesh(objTrans, "MyObjects/cube.obj", ShaderTypeEnum.SingleColorWithLight, new Vector3(1f, 0.2f, 0.6f));
+            Transform objTrans = new()
+            {
+                Position = new Vector3(-5f, 0f, 15f),
+                Rotation = Vector3.Zero,
+                Scale = new Vector3(1f)
+            };
+            game.AddGameObjectFromWavefront(objTrans, "MyObjects/cube", ShaderTypeEnum.SingleColor);
 
             //Transform mountainTransform = new()
             //{
@@ -56,7 +56,7 @@ namespace TestGame
             //game.AddGameObjectWithMesh(spyroTransform, "MyObjects/3dcircle.obj", ShaderTypeEnum.SingleColorWithLight, new(1f, 0.3f, 0.2f));
 
             game.AddGameObjectFromWavefront(new Transform(), "MyObjects/harrypotter",
-                ShaderTypeEnum.SingleColor);
+                ShaderTypeEnum.SingleColorWithLight);
 
             game.StartGame();
         }

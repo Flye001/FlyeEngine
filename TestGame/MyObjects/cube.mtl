@@ -1,0 +1,5 @@
+# www.blender.org
+
+newmtl Material
+Kd 0.0 1.0 0.0
+illum 0

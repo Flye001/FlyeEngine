@@ -112,9 +112,9 @@ namespace FlyeEngine.GraphicsEngine
                                 gpuVertices.Add(normal.Z);
                                 gpuVertices.Add(tempTextures[i].X);
                                 gpuVertices.Add(tempTextures[i].Y);
-                                gpuVertices.Add(currentMaterial.Ka.X);
-                                gpuVertices.Add(currentMaterial.Ka.Y);
-                                gpuVertices.Add(currentMaterial.Ka.Z);
+                                gpuVertices.Add(currentMaterial.Kd.X);
+                                gpuVertices.Add(currentMaterial.Kd.Y);
+                                gpuVertices.Add(currentMaterial.Kd.Z);
                             }
                         }
                         // face has no texture data
@@ -140,7 +140,6 @@ namespace FlyeEngine.GraphicsEngine
                                 gpuVertices.Add(currentMaterial.Kd.Z);
                             }
                         }
-
                         break;
                 }
             }
@@ -161,7 +160,7 @@ namespace FlyeEngine.GraphicsEngine
             GL.VertexAttribPointer(2, 2, VertexAttribPointerType.Float, false, 11 * sizeof(float), 6 * sizeof(float));
             GL.EnableVertexAttribArray(2);
             // Colors
-            GL.VertexAttribPointer(3, 3, VertexAttribPointerType.Float, false, 11 * sizeof(float), 9 * sizeof(float));
+            GL.VertexAttribPointer(3, 3, VertexAttribPointerType.Float, false, 11 * sizeof(float), 8 * sizeof(float));
             GL.EnableVertexAttribArray(3);
 
             var vertexArray = gpuVertices.ToArray();

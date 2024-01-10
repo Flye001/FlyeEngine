@@ -134,25 +134,12 @@ namespace FlyeEngine
             return obj;
         }
 
-        public GameObject AddGameObjectWithMesh(Transform transform, string meshFilePath, ShaderTypeEnum shaderType)
-        {
-            if (!_meshCollection.ContainsKey(meshFilePath))
-            {
-                _meshCollection.Add(meshFilePath, new Mesh(meshFilePath));
-            }
-
-            var obj = new GameObject(transform.Position, transform.Rotation, transform.Scale,
-                _meshCollection[meshFilePath], shaderType);
-            _sceneObjects.Add(obj);
-            return obj;
-        }
-
         public GameObject AddGameObjectWithTexture(Transform transform, string meshFilePath, string textureFilePath,
             ShaderTypeEnum shaderType)
         {
             if (!_meshCollection.ContainsKey(meshFilePath))
             {
-                _meshCollection.Add(meshFilePath, new Mesh(meshFilePath));
+                _meshCollection.Add(meshFilePath, Mesh.LoadFullWavefrontFile(meshFilePath));
             }
             if (!_textureCollection.ContainsKey(textureFilePath))
             {

@@ -7,7 +7,7 @@ layout (location = 3) in vec3 inColor;
 out vec3 FragPos;
 out vec3 Normal;
 out vec2 texCoord;
-out vec3 Color;
+out vec3 outColor;
 
 uniform mat4 modelMatrix;
 uniform mat4 viewMatrix;
@@ -20,5 +20,5 @@ void main()
 	FragPos = vec3(vec4(inPosition, 1.0) * modelMatrix);
 	Normal = inNormal * modelNormalMatrix;
 	texCoord = inTexCoord;
-	Color = inColor;
+	outColor = inColor;
 }
