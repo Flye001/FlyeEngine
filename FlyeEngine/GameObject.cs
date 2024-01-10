@@ -41,9 +41,7 @@ namespace FlyeEngine
         public Matrix4 ModelMatrix { get; private set; }
         public Matrix3 ModelNormalMatrix { get; private set; }
 
-
         private readonly Mesh? _mesh;
-        private readonly Texture? _texture;
         public ShaderTypeEnum ShaderType { get; }
 
         public GameObject(Vector3 position, Vector3 rotation, Vector3 scale)
@@ -54,25 +52,13 @@ namespace FlyeEngine
 
             UpdateModelMatrix();
         }
-
+        
         public GameObject(Vector3 position, Vector3 rotation, Vector3 scale, Mesh mesh, ShaderTypeEnum shader)
         {
             _position = position;
             _rotation = rotation;
             _scale = scale;
             _mesh = mesh;
-            ShaderType = shader;
-
-            UpdateModelMatrix();
-        }
-        
-        public GameObject(Vector3 position, Vector3 rotation, Vector3 scale, Mesh mesh, Texture texture, ShaderTypeEnum shader)
-        {
-            _position = position;
-            _rotation = rotation;
-            _scale = scale;
-            _mesh = mesh;
-            _texture = texture;
             ShaderType = shader;
 
             UpdateModelMatrix();
@@ -91,9 +77,13 @@ namespace FlyeEngine
             ModelNormalMatrix = new Matrix3(Matrix4.Transpose(Matrix4.Invert(ModelMatrix)));
         }
 
+        public Dictionary<string, int>? GetTextures()
+        {
+            return _mesh?.GetTextures();
+        }
+
         public void Render()
         {
-            _texture?.Use();
             _mesh?.Draw();
         }
     }

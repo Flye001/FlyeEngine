@@ -24,7 +24,7 @@ namespace TestGame
                 Rotation = Vector3.Zero,
                 Scale = new Vector3(1f)
             };
-            game.AddGameObjectFromWavefront(objTrans, "MyObjects/cube", ShaderTypeEnum.SingleColor);
+            //game.AddGameObjectFromWavefront(objTrans, "MyObjects/cube", ShaderTypeEnum.SingleColor);
 
             //Transform mountainTransform = new()
             //{
@@ -51,12 +51,23 @@ namespace TestGame
             //};
             //game.AddGameObjectWithMesh(lightT, "MyObjects/cube.obj", ShaderTypeEnum.SingleColor, new Vector3(1f, 1f, 0f));
 
-            //Transform spyroTransform = new();
-            //game.AddGameObjectWithTexture(spyroTransform, "MyObjects/spyro.obj", "MyTextures/spyro.png", ShaderTypeEnum.Texture);
+            Transform peachTrans = new()
+            {
+                Position = new Vector3(105, -3f, -16f),
+                Rotation = new Vector3(0, float.Pi, 0f),
+                Scale = new Vector3(25f)
+            };
+            game.AddGameObjectFromWavefront(peachTrans, "MyObjects\\peach", ShaderTypeEnum.Texture);
+
+            Transform spyroTransform = new()
+            {
+                Position = new Vector3(0, 0, 0)
+            };
+            game.AddGameObjectFromWavefront(spyroTransform, "MyObjects\\spyro", ShaderTypeEnum.Texture);
             //game.AddGameObjectWithMesh(spyroTransform, "MyObjects/3dcircle.obj", ShaderTypeEnum.SingleColorWithLight, new(1f, 0.3f, 0.2f));
 
-            game.AddGameObjectFromWavefront(new Transform(), "MyObjects/harrypotter",
-                ShaderTypeEnum.SingleColorWithLight);
+            //game.AddGameObjectFromWavefront(new Transform(), "MyObjects\\harrypotter",
+                //ShaderTypeEnum.SingleColor);
 
             game.StartGame();
         }

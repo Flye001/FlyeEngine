@@ -27,9 +27,9 @@ namespace FlyeEngine.GraphicsEngine
             GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
         }
 
-        public void Use()
+        public void Use(TextureUnit target = TextureUnit.Texture0)
         {
-            GL.ActiveTexture(TextureUnit.Texture0);
+            GL.ActiveTexture(target);
             GL.BindTexture(TextureTarget.Texture2D, Handle);
         }
     }

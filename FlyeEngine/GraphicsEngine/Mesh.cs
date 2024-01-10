@@ -1,4 +1,5 @@
-﻿using OpenTK.Graphics.OpenGL4;
+﻿using System.Runtime.InteropServices;
+using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 
 namespace FlyeEngine.GraphicsEngine
@@ -11,6 +12,7 @@ namespace FlyeEngine.GraphicsEngine
         private readonly int _vertexArrayObject;
         private readonly int _vertexBufferObject;
         private readonly int _numOfVertices;
+        private readonly Dictionary<string, int> _textures;
 
         /// <summary>
         /// 
@@ -19,8 +21,8 @@ namespace FlyeEngine.GraphicsEngine
         /// <returns></returns>
         public static Mesh LoadFullWavefrontFile(string objectFilePath)
         {
-            var objFile = objectFilePath + ".obj";
-            var mtlFile = objectFilePath + ".mtl";
+            var objFile = Path.Combine(objectFilePath, "object.obj");
+            var mtlFile = Path.Combine(objectFilePath, "material.mtl");
             if (!File.Exists(objFile) || !File.Exists(mtlFile))
             {
                 throw new FileNotFoundException($"Could not find an object file at '{objectFilePath}'!");
@@ -29,6 +31,7 @@ namespace FlyeEngine.GraphicsEngine
             // Load materials
             Dictionary<string, Mtl> materials = new();
             Mtl currentMaterial = new();
+            var textureCount = new Dictionary<string, int>();
             foreach (var line in File.ReadAllLines(mtlFile))
             {
                 if (string.IsNullOrEmpty(line)) continue;
@@ -57,6 +60,10 @@ namespace FlyeEngine.GraphicsEngine
                         break;
                     case "illum":
                         currentMaterial.Illumination = int.Parse(splitLine[1]);
+                        break;
+                    case "map_Kd":
+                        currentMaterial.MapKd = Path.Combine(objectFilePath, splitLine[1]);
+                        textureCount.TryAdd(currentMaterial.MapKd, textureCount.Count);
                         break;
                 }
             }
@@ -110,6 +117,7 @@ namespace FlyeEngine.GraphicsEngine
                                 gpuVertices.Add(normal.X);
                                 gpuVertices.Add(normal.Y);
                                 gpuVertices.Add(normal.Z);
+                                gpuVertices.Add(textureCount[currentMaterial.MapKd]);
                                 gpuVertices.Add(tempTextures[i].X);
                                 gpuVertices.Add(tempTextures[i].Y);
                                 gpuVertices.Add(currentMaterial.Kd.X);
@@ -135,6 +143,7 @@ namespace FlyeEngine.GraphicsEngine
                                 gpuVertices.Add(normal.Z);
                                 gpuVertices.Add(0);
                                 gpuVertices.Add(0);
+                                gpuVertices.Add(0);
                                 gpuVertices.Add(currentMaterial.Kd.X);
                                 gpuVertices.Add(currentMaterial.Kd.Y);
                                 gpuVertices.Add(currentMaterial.Kd.Z);
@@ -151,30 +160,36 @@ namespace FlyeEngine.GraphicsEngine
             GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBufferObject);
 
             // Vertices
-            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 11 * sizeof(float), 0);
+            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 12 * sizeof(float), 0);
             GL.EnableVertexAttribArray(0);
             // Normals
-            GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 11 * sizeof(float), 3 * sizeof(float));
+            GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 12 * sizeof(float), 3 * sizeof(float));
             GL.EnableVertexAttribArray(1);
             // Textures
-            GL.VertexAttribPointer(2, 2, VertexAttribPointerType.Float, false, 11 * sizeof(float), 6 * sizeof(float));
+            GL.VertexAttribPointer(2, 3, VertexAttribPointerType.Float, false, 12 * sizeof(float), 6 * sizeof(float));
             GL.EnableVertexAttribArray(2);
             // Colors
-            GL.VertexAttribPointer(3, 3, VertexAttribPointerType.Float, false, 11 * sizeof(float), 8 * sizeof(float));
+            GL.VertexAttribPointer(3, 3, VertexAttribPointerType.Float, false, 12 * sizeof(float), 9 * sizeof(float));
             GL.EnableVertexAttribArray(3);
 
             var vertexArray = gpuVertices.ToArray();
             var numOfVertices = vertexArray.Length;
             GL.BufferData(BufferTarget.ArrayBuffer, numOfVertices * sizeof(float), vertexArray, BufferUsageHint.StaticDraw);
 
-            return new Mesh(vertexArrayObject, vertexBufferObject, numOfVertices);
+            return new Mesh(vertexArrayObject, vertexBufferObject, numOfVertices, textureCount);
         }
 
-        private Mesh(int vertexArrayObject, int vertexBufferObject, int numOfVertices)
+        private Mesh(int vertexArrayObject, int vertexBufferObject, int numOfVertices, Dictionary<string, int> textures)
         {
             _vertexArrayObject = vertexArrayObject;
             _vertexBufferObject = vertexBufferObject;
             _numOfVertices = numOfVertices;
+            _textures = textures;
+        }
+
+        public Dictionary<string, int> GetTextures()
+        {
+            return _textures;
         }
 
         public void Draw()

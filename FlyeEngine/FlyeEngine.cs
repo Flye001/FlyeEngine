@@ -1,9 +1,9 @@
 ﻿using FlyeEngine.GraphicsEngine;
+using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
-using System.Reflection;
 
 namespace FlyeEngine
 {
@@ -48,6 +48,26 @@ namespace FlyeEngine
                 _graphicsEngine.SetShaderUniformVector3("lightPosition", _lightPosition);
             }
         }
+
+        private readonly Dictionary<int, TextureUnit> _textureMappings = new()
+        {
+            { 0, TextureUnit.Texture0 },
+            { 1, TextureUnit.Texture1 },
+            { 2, TextureUnit.Texture2 },
+            { 3, TextureUnit.Texture3 },
+            { 4, TextureUnit.Texture4 },
+            { 5, TextureUnit.Texture5 },
+            { 6, TextureUnit.Texture6 },
+            { 7, TextureUnit.Texture7 },
+            { 8, TextureUnit.Texture8 },
+            { 9, TextureUnit.Texture9 },
+            { 10, TextureUnit.Texture10 },
+            { 11, TextureUnit.Texture11 },
+            { 12, TextureUnit.Texture12 },
+            { 13, TextureUnit.Texture13 },
+            { 14, TextureUnit.Texture14 },
+            { 15, TextureUnit.Texture15 },
+        };
 
         /// <summary>
         /// Create new game instance
@@ -99,7 +119,7 @@ namespace FlyeEngine
                 _gameCamera.HandleInput(keyboardState, mouseState, deltaTime);
                 _graphicsEngine.UpdateViewMatrix(_gameCamera.GetViewMatrix());
             }
-
+            Console.WriteLine(_gameCamera.GetPosition());
             OnUpdate();
         }
 
@@ -110,6 +130,17 @@ namespace FlyeEngine
                 _graphicsEngine.UseShader(sceneObject.ShaderType);
                 _graphicsEngine.SetShaderUniformMatrix4(sceneObject.ShaderType, "modelMatrix", sceneObject.ModelMatrix);
                 _graphicsEngine.SetShaderUniformMatrix3(sceneObject.ShaderType, "modelNormalMatrix", sceneObject.ModelNormalMatrix);
+                
+                // Set textures
+                var texs = sceneObject.GetTextures();
+                if (texs != null)
+                {
+                    foreach (var i in texs)
+                    {
+                        _textureCollection[i.Key].Use(_textureMappings[i.Value]);
+                    }
+                }
+                
                 sceneObject.Render();
             }
         }
@@ -131,27 +162,23 @@ namespace FlyeEngine
             var obj = new GameObject(transform.Position, transform.Rotation, transform.Scale,
                 _meshCollection[meshFilePath], shaderType);
             _sceneObjects.Add(obj);
+
+            var texs = obj.GetTextures();
+            if (texs != null)
+            {
+                foreach (var tex in texs.Keys)
+                {
+                    if (!_textureCollection.ContainsKey(tex))
+                    {
+                        _textureCollection.Add(tex, new Texture(tex));
+                    }
+                }
+                
+            }
+
             return obj;
         }
-
-        public GameObject AddGameObjectWithTexture(Transform transform, string meshFilePath, string textureFilePath,
-            ShaderTypeEnum shaderType)
-        {
-            if (!_meshCollection.ContainsKey(meshFilePath))
-            {
-                _meshCollection.Add(meshFilePath, Mesh.LoadFullWavefrontFile(meshFilePath));
-            }
-            if (!_textureCollection.ContainsKey(textureFilePath))
-            {
-                _textureCollection.Add(textureFilePath, new Texture(textureFilePath));
-            }
-
-            var obj = new GameObject(transform.Position, transform.Rotation, transform.Scale,
-                _meshCollection[meshFilePath], _textureCollection[textureFilePath], shaderType);
-            _sceneObjects.Add(obj);
-            return obj;
-        }
-
+        
         public void StartGame()
         {
             _graphicsEngine.Run();

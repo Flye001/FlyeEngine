@@ -7,6 +7,7 @@ namespace FlyeEngine
     {
         public void HandleInput(KeyboardState keyboardState, MouseState mouseState, float deltaTime);
         public Matrix4 GetViewMatrix();
+        public string GetPosition();
     }
 
     public class BasicCamera : ICamera
@@ -105,6 +106,11 @@ namespace FlyeEngine
             _front = Vector3.Normalize(_front);
             _right = Vector3.Normalize(Vector3.Cross(_front, Vector3.UnitY));
             _up = Vector3.Normalize(Vector3.Cross(_right, _front));
+        }
+
+        public string GetPosition()
+        {
+            return $"Position: {_position.X} {_position.Y} {_position.Z}";
         }
     }
 }

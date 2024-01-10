@@ -3,21 +3,20 @@ using OpenTK.Mathematics;
 
 namespace FlyeEngine.GraphicsEngine
 {
-    internal class Shader : IDisposable
+    public class Shader : IDisposable
     {
         private readonly int Handle;
         private bool _disposedValue = false;
 
         public Shader(string vertexPath, string fragmentPath)
         {
-            int vertexShader, fragmentShader;
             var vertexShaderSource = File.ReadAllText(vertexPath);
             var fragmentShaderSource = File.ReadAllText(fragmentPath);
 
-            vertexShader = GL.CreateShader(ShaderType.VertexShader);
+            var vertexShader = GL.CreateShader(ShaderType.VertexShader);
             GL.ShaderSource(vertexShader, vertexShaderSource);
 
-            fragmentShader = GL.CreateShader(ShaderType.FragmentShader);
+            var fragmentShader = GL.CreateShader(ShaderType.FragmentShader);
             GL.ShaderSource(fragmentShader, fragmentShaderSource);
 
             GL.CompileShader(vertexShader);
@@ -87,6 +86,13 @@ namespace FlyeEngine.GraphicsEngine
             GL.UseProgram(Handle);
             var location = GL.GetUniformLocation(Handle, name);
             GL.Uniform1(location, i);
+        }
+
+        public void SetIntArray(string name, int index, int i)
+        {
+            GL.UseProgram(Handle);
+            var location = GL.GetUniformLocation(Handle, name);
+            GL.Uniform1(location + index, i);
         }
 
         protected virtual void Dispose(bool disposing)

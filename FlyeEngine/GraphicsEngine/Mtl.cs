@@ -29,6 +29,10 @@ namespace FlyeEngine.GraphicsEngine
         /// Illumination Model
         /// </summary>
         public int Illumination { get; set; }
+        /// <summary>
+        /// File for texture map
+        /// </summary>
+        public string MapKd { get; set; } = string.Empty;
 
         public Mtl()
         {

@@ -45,6 +45,10 @@ namespace FlyeEngine.GraphicsEngine
                 //shader.SetMatrix4("modelMatrix", ref modelMatrix);
                 shader.SetMatrix4("viewMatrix", ref _viewMatrix);
                 shader.SetMatrix4("projectionMatrix", ref _projectionMatrix);
+                for (int i = 0; i < 16; i++)
+                {
+                    shader.SetIntArray("textures", i, i);
+                }
             }
         }
 
@@ -64,6 +68,15 @@ namespace FlyeEngine.GraphicsEngine
                 throw new KeyNotFoundException($"Could not find shader for '{type}'!");
             }
             _shaders[type].Use();
+        }
+
+        public void SetUniformIntArray(ShaderTypeEnum shaderType, string propertyName, int index, int value)
+        {
+            if (!_shaders.ContainsKey(shaderType))
+            {
+                throw new KeyNotFoundException($"Could not find shader for '{shaderType}'!");
+            }
+            _shaders[shaderType].SetIntArray(propertyName, index, value);
         }
 
         public void SetShaderUniformVector3(ShaderTypeEnum shaderType, string propertyName, Vector3 propertyValue)
