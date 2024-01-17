@@ -5,6 +5,7 @@
         SingleColor,
         SingleColorWithLight,
         Texture,
-        TextureWithLight
+        TextureWithLight,
+        Wireframe
     }
 }

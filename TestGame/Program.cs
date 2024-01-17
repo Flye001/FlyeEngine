@@ -19,9 +19,14 @@ namespace TestGame
 
             // Add game objects
             game.AddGameObjectFromWavefront(new Transform(), "MyObjects\\harrypotter", ShaderTypeEnum.SingleColor);
+            
             var cube = game.AddGameObjectFromWavefront(new Transform() {Position = new(-5f, 35f, 3f)}, "MyObjects\\cube", ShaderTypeEnum.SingleColorWithLight);
-
             cube.AddRigidBody(2f);
+            cube.AddBoxCollider(new Vector3(2f));
+
+            var solidCube =
+                game.AddGameObjectFromWavefront(new Transform() {Position = new Vector3(0f, 2f, 0f)}, "MyObjects\\cube", ShaderTypeEnum.SingleColor);
+            solidCube.AddBoxCollider(new Vector3(2f));
 
             game.StartGame();
         }

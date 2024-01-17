@@ -34,6 +34,8 @@ namespace FlyeEngine
         private readonly Dictionary<string, Mesh> _meshCollection;
         private readonly List<GameObject> _sceneObjects;
 
+        private bool _renderColliderWireframes = true;
+
         public Action<float> OnUpdate;
 
         private Vector3 _lightPosition;
@@ -113,9 +115,19 @@ namespace FlyeEngine
             {
                 _graphicsEngine.UseShader(sceneObject.ShaderType);
                 _graphicsEngine.SetShaderUniformMatrix4(sceneObject.ShaderType, "modelMatrix", sceneObject.ModelMatrix);
-                _graphicsEngine.SetShaderUniformMatrix3(sceneObject.ShaderType, "modelNormalMatrix", sceneObject.ModelNormalMatrix);
-                
+                _graphicsEngine.SetShaderUniformMatrix3(sceneObject.ShaderType, "modelNormalMatrix",
+                    sceneObject.ModelNormalMatrix);
+
                 sceneObject.Render();
+
+                if (sceneObject.HasBoxCollider && _renderColliderWireframes)
+                {
+                    _graphicsEngine.UseShader(ShaderTypeEnum.Wireframe);
+                    _graphicsEngine.SetShaderUniformMatrix4(ShaderTypeEnum.Wireframe, "modelMatrix",
+                        sceneObject.ColliderModelMatrix ?? Matrix4.Identity);
+
+                    sceneObject.RenderBoxCollider();
+                }
             }
         }
 

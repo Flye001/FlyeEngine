@@ -20,6 +20,7 @@ namespace FlyeEngine
         public void UpdatePosition(Vector3 position)
         {
             Position = position;
+            _boxCollider?.UpdatePosition(position);
             UpdateModelMatrix();
         }
 
@@ -52,6 +53,9 @@ namespace FlyeEngine
         public ShaderTypeEnum ShaderType { get; }
 
         private RigidBody? _rigidBody;
+        private BoxCollider? _boxCollider;
+        public bool HasBoxCollider => _boxCollider != null;
+        public Matrix4? ColliderModelMatrix => _boxCollider?.ModelMatrix;
 
         public GameObject(Vector3 position, Vector3 rotation, Vector3 scale)
         {
@@ -76,6 +80,11 @@ namespace FlyeEngine
         public void AddRigidBody(float mass)
         {
             _rigidBody = new RigidBody(mass);
+        }
+
+        public void AddBoxCollider(Vector3 dimensions)
+        {
+            _boxCollider = new BoxCollider(dimensions, Position);
         }
 
         private void UpdateModelMatrix()
@@ -104,6 +113,11 @@ namespace FlyeEngine
         public void Render()
         {
             _mesh?.Draw();
+        }
+
+        public void RenderBoxCollider()
+        {
+            _boxCollider?.RenderWireframe();
         }
     }
 }
