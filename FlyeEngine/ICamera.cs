@@ -10,6 +10,33 @@ namespace FlyeEngine
         public string GetPosition();
     }
 
+    public class StaticCamera : ICamera
+    {
+        private readonly Vector3 _position;
+        private readonly Vector3 _up = Vector3.UnitY;
+        private readonly Vector3 _lookDirection;
+
+        public StaticCamera(Vector3 position, Vector3 lookDirection)
+        {
+            _position = position;
+            _lookDirection = lookDirection;
+        }
+
+        public void HandleInput(KeyboardState keyboardState, MouseState mouseState, float deltaTime)
+        {
+        }
+
+        public Matrix4 GetViewMatrix()
+        {
+            return Matrix4.LookAt(_position, _lookDirection, _up);
+        }
+
+        public string GetPosition()
+        {
+            return $"Position: {_position.X} {_position.Y} {_position.Z}";
+        }
+    }
+
     public class BasicCamera : ICamera
     {
         private Vector3 _position;

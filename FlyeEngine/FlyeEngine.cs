@@ -39,9 +39,10 @@ namespace FlyeEngine
         private readonly Dictionary<string, Mesh> _meshCollection;
         private readonly List<GameObject> _sceneObjects;
 
-        private bool _renderColliderWireframes = true;
+        private bool _renderColliderWireframes = false;
+        private bool _printCameraPosition = false;
 
-        public Action<float> OnUpdate;
+        public Action<float, KeyboardState> OnUpdate;
 
         private Vector3 _lightPosition;
         public Vector3 LightPosition
@@ -81,6 +82,10 @@ namespace FlyeEngine
                 _gameCamera = new BasicCamera(_screen_aspect_ration, Vector3.Zero);
                 _graphicsEngine.CursorState = CursorState.Grabbed;
             }
+            else
+            {
+                _gameCamera = camera;
+            }
             _sceneObjects = new List<GameObject>();
             _meshCollection = new Dictionary<string, Mesh>();
 
@@ -104,7 +109,12 @@ namespace FlyeEngine
                 _gameCamera.HandleInput(keyboardState, mouseState, deltaTime);
                 _graphicsEngine.UpdateViewMatrix(_gameCamera.GetViewMatrix());
             }
-            Console.WriteLine(_gameCamera.GetPosition());
+
+            if (_printCameraPosition)
+            {
+                Console.WriteLine(_gameCamera.GetPosition());
+            }
+            
 
             _physicsEngine.CheckCollisions(_sceneObjects.Where(x => x.HasBoxCollider));
 
@@ -114,7 +124,7 @@ namespace FlyeEngine
                 sceneObject.Update(deltaTime);
             }
 
-            OnUpdate(deltaTime);
+            OnUpdate(deltaTime, keyboardState);
         }
 
         private void RenderFrame()
