@@ -19,6 +19,7 @@ namespace FlyeEngine.PhysicsEngine
         /// </summary>
         public float Depth { get; private set; }
 
+        private Vector3 _positionOffset;
         public Vector3 WorldPosition { get; private set; }
         public Matrix4 ModelMatrix { get; private set; }
 
@@ -36,14 +37,15 @@ namespace FlyeEngine.PhysicsEngine
 
         public void UpdatePosition(Vector3 newPosition)
         {
-            WorldPosition = newPosition;
+            WorldPosition = newPosition + _positionOffset;
             ModelMatrix = Matrix4.CreateTranslation(WorldPosition);
         }
 
-        public BoxCollider(Vector3 size, Vector3 initialPosition)
+        public BoxCollider(Vector3 size, Vector3 initialPosition, Vector3 offset)
         {
-            WorldPosition = initialPosition;
+            WorldPosition = initialPosition + offset;
             ModelMatrix = Matrix4.CreateTranslation(WorldPosition);
+            _positionOffset = offset;
 
             Width = size.X;
             Height = size.Y;

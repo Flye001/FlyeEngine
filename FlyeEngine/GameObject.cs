@@ -82,9 +82,9 @@ namespace FlyeEngine
             _rigidBody = new RigidBody(mass);
         }
 
-        public void AddBoxCollider(Vector3 dimensions)
+        public void AddBoxCollider(Vector3 dimensions, Vector3 offset)
         {
-            _boxCollider = new BoxCollider(dimensions, Position);
+            _boxCollider = new BoxCollider(dimensions, Position, offset);
         }
 
         private void UpdateModelMatrix()
