@@ -4,7 +4,7 @@ using static System.Formats.Asn1.AsnWriter;
 
 namespace FlyeEngine.PhysicsEngine
 {
-    internal class BoxCollider
+    public class BoxCollider
     {
         /// <summary>
         /// Y Component
@@ -24,8 +24,6 @@ namespace FlyeEngine.PhysicsEngine
         public Matrix4 ModelMatrix { get; private set; }
 
         private readonly int _vertexArrayObject;
-        private readonly int _vertexBufferObject;
-        private readonly int _elementBufferObject;
         private readonly int _indicesLength;
 
         public float MinX => WorldPosition.X - Width / 2f;
@@ -80,8 +78,8 @@ namespace FlyeEngine.PhysicsEngine
             };
             _indicesLength = indices.Length;
 
-            _vertexBufferObject = GL.GenBuffer();
-            GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject);
+            var vertexBufferObject = GL.GenBuffer();
+            GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBufferObject);
             GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.StaticDraw);
 
             _vertexArrayObject = GL.GenVertexArray();
@@ -91,8 +89,8 @@ namespace FlyeEngine.PhysicsEngine
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
             GL.EnableVertexAttribArray(0);
 
-            _elementBufferObject = GL.GenBuffer();
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, _elementBufferObject);
+            var elementBufferObject = GL.GenBuffer();
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, elementBufferObject);
             GL.BufferData(BufferTarget.ElementArrayBuffer, indices.Length * sizeof(uint), indices, BufferUsageHint.StaticDraw);
         }
 

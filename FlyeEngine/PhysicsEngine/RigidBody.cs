@@ -2,11 +2,12 @@
 
 namespace FlyeEngine.PhysicsEngine
 {
-    internal class RigidBody
+    public class RigidBody
     {
         public float Mass { get; private set; }
         public Vector3 Velocity { get; private set; } = Vector3.Zero;
         public Vector3 Acceleration { get; private set; } = new Vector3(0f, -9.8f, 0f);
+        public bool IsColliding { get; set; } = false;
 
         public RigidBody(float mass)
         {
@@ -16,6 +17,8 @@ namespace FlyeEngine.PhysicsEngine
         public void Update(Action<Vector3> updatePosition, Vector3 currentPosition, float deltaTime)
         {
             // s = ut + 1/2 * a * t^2
+
+            if (IsColliding) return;
 
             // Update Position
             var newPosition = currentPosition;

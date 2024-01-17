@@ -30,6 +30,11 @@ namespace FlyeEngine
         /// </summary>
         private readonly GraphicsEngine.GraphicsEngine _graphicsEngine;
 
+        /// <summary>
+        /// Manages the game's physics
+        /// </summary>
+        private readonly PhysicsEngine.PhysicsEngine _physicsEngine;
+
         private readonly ICamera _gameCamera;
         private readonly Dictionary<string, Mesh> _meshCollection;
         private readonly List<GameObject> _sceneObjects;
@@ -70,6 +75,7 @@ namespace FlyeEngine
                 Title = _screen_name
             };
             _graphicsEngine = new(windowSettings, UpdateFrame, RenderFrame, _screen_aspect_ration);
+            _physicsEngine = new PhysicsEngine.PhysicsEngine();
             if (camera == null)
             {
                 _gameCamera = new BasicCamera(_screen_aspect_ration, Vector3.Zero);
@@ -99,6 +105,8 @@ namespace FlyeEngine
                 _graphicsEngine.UpdateViewMatrix(_gameCamera.GetViewMatrix());
             }
             Console.WriteLine(_gameCamera.GetPosition());
+
+            _physicsEngine.CheckCollisions(_sceneObjects.Where(x => x.HasBoxCollider));
 
             // Run game objects' update method
             foreach (var sceneObject in _sceneObjects)
