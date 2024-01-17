@@ -5,8 +5,8 @@ namespace FlyeEngine.PhysicsEngine
     internal class RigidBody
     {
         public float Mass { get; private set; }
-        public float Velocity { get; private set; } = 0f;
-        public float Acceleration { get; private set; } = 9.8f;
+        public Vector3 Velocity { get; private set; } = Vector3.Zero;
+        public Vector3 Acceleration { get; private set; } = new Vector3(0f, -9.8f, 0f);
 
         public RigidBody(float mass)
         {
@@ -19,7 +19,7 @@ namespace FlyeEngine.PhysicsEngine
 
             // Update Position
             var newPosition = currentPosition;
-            newPosition.Y -= Velocity * deltaTime + 0.5f * Acceleration * deltaTime * deltaTime;
+            newPosition += Velocity * deltaTime + 0.5f * Acceleration * deltaTime * deltaTime;
             updatePosition(newPosition);
 
             // Update Velocity
