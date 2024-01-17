@@ -120,6 +120,13 @@ namespace FlyeEngine
                 _graphicsEngine.UpdateViewMatrix(_gameCamera.GetViewMatrix());
             }
             Console.WriteLine(_gameCamera.GetPosition());
+
+            // Run game objects' update method
+            foreach (var sceneObject in _sceneObjects)
+            {
+                sceneObject.Update(deltaTime);
+            }
+
             OnUpdate(deltaTime);
         }
 

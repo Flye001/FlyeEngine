@@ -13,44 +13,21 @@ namespace TestGame
             Console.WriteLine("Hello, World!");
             var game = new FlyeEngine.FlyeEngine(1920, 1080, "Test Game");
 
-            game.LightPosition = new Vector3(0, 30f, 0f);
+            game.LightPosition = new Vector3(-2f, 15f, 0f);
 
             game.OnUpdate += OnUpdate;
 
             // Add game objects
-            Transform objTrans = new()
-            {
-                Position = new Vector3(-40, 20, -50),
-                Rotation = Vector3.Zero,
-                Scale = new Vector3(5f)
-            };
-            //plane = game.AddGameObjectFromWavefront(objTrans, "MyObjects/cube", ShaderTypeEnum.SingleColor);
+            game.AddGameObjectFromWavefront(new Transform(), "MyObjects\\harrypotter", ShaderTypeEnum.SingleColor);
+            var cube = game.AddGameObjectFromWavefront(new Transform() {Position = new(-5f, 35f, 3f)}, "MyObjects\\cube", ShaderTypeEnum.SingleColorWithLight);
 
-            //Transform mountainTransform = new()
-            //{
-            //    Position = new Vector3(10f, -15f, 30f),
-            //    Rotation = Vector3.Zero,
-            //    Scale = new Vector3(1f)
-            //};
-            //game.AddGameObjectWithMesh(mountainTransform, "MyObjects/mountains.obj", ShaderTypeEnum.SingleColorWithLight, new Vector3(0.7f, 0.4f, 0.1f));
+            cube.AddRigidBody(2f);
 
-            //Transform planeTrans = new()
-            //{
-            //    Position = new Vector3(-40, 20, -50),
-            //    Rotation = new Vector3(0, float.Pi / 2f, -float.Pi / 9f),
-            //    Scale = new Vector3(0.01f)
-            //};
-            //Transform boring = new() { Position = Vector3.Zero, Rotation = Vector3.Zero, Scale = new Vector3(0.01f) };
-            //plane = game.AddGameObjectWithTexture(planeTrans, "MyObjects/airplane.obj", "MyTextures/airplane.png", ShaderTypeEnum.Texture);
+            game.StartGame();
+        }
 
-            //Transform lightT = new()
-            //{
-            //    Position = new Vector3(0, 50f, 0f),
-            //    Rotation = Vector3.Zero,
-            //    Scale = Vector3.One
-            //};
-            //game.AddGameObjectWithMesh(lightT, "MyObjects/cube.obj", ShaderTypeEnum.SingleColor, new Vector3(1f, 1f, 0f));
-
+        private void SpyroMarioLevel(FlyeEngine.FlyeEngine game)
+        {
             Transform peachTrans = new()
             {
                 Position = new Vector3(105, -3f, -16f),
@@ -73,13 +50,6 @@ namespace TestGame
                 Position = new Vector3(0, 0, 0)
             };
             game.AddGameObjectFromWavefront(spyroTransform, "MyObjects\\spyro", ShaderTypeEnum.Texture);
-
-
-            game.AddGameObjectFromWavefront(new Transform() {Position = new(0,1,-20)}, "MyObjects\\harrypotter", ShaderTypeEnum.SingleColorWithLight);
-
-            game.AddGameObjectFromWavefront(new Transform(), "MyObjects\\cottage", ShaderTypeEnum.Texture);
-
-            game.StartGame();
         }
 
         private static void OnUpdate(float deltaTime)

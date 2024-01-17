@@ -1,19 +1,26 @@
 ﻿using FlyeEngine.GraphicsEngine;
+using FlyeEngine.PhysicsEngine;
 using OpenTK.Mathematics;
 
 namespace FlyeEngine
 {
     public class GameObject
     {
-        private Vector3 _position;
-        public Vector3 Position
+        public Vector3 Position { get; private set; }
+        //public Vector3 Position
+        //{
+        //    get => _position;
+        //    set
+        //    {
+        //        _position = value;
+        //        UpdateModelMatrix();
+        //    }
+        //}
+
+        public void UpdatePosition(Vector3 position)
         {
-            get => _position;
-            set
-            {
-                _position = value;
-                UpdateModelMatrix();
-            }
+            Position = position;
+            UpdateModelMatrix();
         }
 
         private Vector3 _rotation;
@@ -44,9 +51,11 @@ namespace FlyeEngine
         private readonly Mesh? _mesh;
         public ShaderTypeEnum ShaderType { get; }
 
+        private RigidBody? _rigidBody;
+
         public GameObject(Vector3 position, Vector3 rotation, Vector3 scale)
         {
-            _position = position;
+            Position = position;
             _rotation = rotation;
             _scale = scale;
 
@@ -55,13 +64,18 @@ namespace FlyeEngine
         
         public GameObject(Vector3 position, Vector3 rotation, Vector3 scale, Mesh mesh, ShaderTypeEnum shader)
         {
-            _position = position;
+            Position = position;
             _rotation = rotation;
             _scale = scale;
             _mesh = mesh;
             ShaderType = shader;
 
             UpdateModelMatrix();
+        }
+
+        public void AddRigidBody(float mass)
+        {
+            _rigidBody = new RigidBody(mass);
         }
 
         private void UpdateModelMatrix()
@@ -80,6 +94,11 @@ namespace FlyeEngine
         public Dictionary<string, int>? GetTextures()
         {
             return _mesh?.GetTextures();
+        }
+
+        public void Update(float deltaTime)
+        {
+            _rigidBody?.Update(UpdatePosition, Position, deltaTime);
         }
 
         public void Render()
