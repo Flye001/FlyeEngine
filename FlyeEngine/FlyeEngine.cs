@@ -40,7 +40,7 @@ namespace FlyeEngine
         private readonly List<GameObject> _sceneObjects;
 
         private bool _renderColliderWireframes = false;
-        private bool _printCameraPosition = false;
+        private bool _printCameraPosition = true;
 
         public Action<float, KeyboardState> OnUpdate;
 
