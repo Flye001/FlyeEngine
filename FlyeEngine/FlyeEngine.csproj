@@ -16,6 +16,9 @@
     <None Update="Engine\FragmentShaders\SingleColorShader.frag">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Engine\FragmentShaders\TextureShaderWithLight.frag">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Engine\VertexShaders\MainVertexShader.vert">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

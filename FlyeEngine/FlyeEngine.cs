@@ -175,7 +175,7 @@ namespace FlyeEngine
         {
             if (!_meshCollection.ContainsKey(meshFilePath))
             {
-                _meshCollection.Add(meshFilePath, Mesh.LoadFullWavefrontFile(meshFilePath));
+                _meshCollection.Add(meshFilePath, Mesh.LoadFromWavefront(meshFilePath));
             }
             var obj = new GameObject(transform.Position, transform.Rotation, transform.Scale,
                 _meshCollection[meshFilePath], shaderType);
@@ -183,7 +183,21 @@ namespace FlyeEngine
             
             return obj;
         }
-        
+
+        public GameObject AddGameObjectFromWavefront(Transform transform, string objFilePath, string mtlFilePath,
+            ShaderTypeEnum shaderType)
+        {
+            if (!_meshCollection.ContainsKey(objFilePath))
+            {
+                _meshCollection.Add(objFilePath, Mesh.LoadFullWavefrontFile(objFilePath, mtlFilePath));
+            }
+            var obj = new GameObject(transform.Position, transform.Rotation, transform.Scale,
+                _meshCollection[objFilePath], shaderType);
+            _sceneObjects.Add(obj);
+
+            return obj;
+        }
+
         public void StartGame()
         {
             _graphicsEngine.Run();

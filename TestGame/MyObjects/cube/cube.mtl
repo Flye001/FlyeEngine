@@ -1,5 +1,8 @@
 # www.blender.org
 
 newmtl Material
+Ns 32.0
+Ka 1.0 1.0 1.0
 Kd 1.0 1.0 1.0
+Ks 0.5 0.5 0.5
 illum 0

@@ -2,11 +2,11 @@
 out vec4 FragColor;
 
 in vec3 texCoord;
-in vec3 vertColor;
+in vec3 diffuse;
 
 uniform sampler2DArray textures;
 
 void main() 
 {
-	FragColor = texture(textures, texCoord.yzx) * vec4(vertColor, 1.0);
+	FragColor = texture(textures, texCoord.yzx) * vec4(diffuse, 1.0);
 }

@@ -15,18 +15,18 @@ namespace FlyeEngine.GraphicsEngine
         private readonly Dictionary<string, int> _textures;
         private readonly TextureArray _texArray;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="objectFilePath">Do not include file extension</param>
-        /// <returns></returns>
-        public static Mesh LoadFullWavefrontFile(string objectFilePath)
+        public static Mesh LoadFromWavefront(string objectFilePath)
         {
-            var objFile = Path.Combine(objectFilePath, "object.obj");
-            var mtlFile = Path.Combine(objectFilePath, "material.mtl");
+            var objFile = objectFilePath + ".obj";
+            var mtlFile = objectFilePath + ".mtl";
+            return LoadFullWavefrontFile(objFile, mtlFile);
+        }
+
+        public static Mesh LoadFullWavefrontFile(string objFile, string mtlFile)
+        {
             if (!File.Exists(objFile) || !File.Exists(mtlFile))
             {
-                throw new FileNotFoundException($"Could not find an object file at '{objectFilePath}'!");
+                throw new FileNotFoundException($"Could not find the object/mtl file!");
             }
 
             // Load materials
@@ -63,7 +63,7 @@ namespace FlyeEngine.GraphicsEngine
                         currentMaterial.Illumination = int.Parse(splitLine[1]);
                         break;
                     case "map_Kd":
-                        currentMaterial.MapKd = Path.Combine(objectFilePath, splitLine[1]);
+                        currentMaterial.MapKd = Path.Combine(Path.GetDirectoryName(objFile), splitLine[1]);
                         textureCount.TryAdd(currentMaterial.MapKd, textureCount.Count);
                         break;
                 }

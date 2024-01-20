@@ -36,6 +36,10 @@ namespace FlyeEngine.GraphicsEngine
                     new Shader("Engine/VertexShaders/MainVertexShader.vert", "Engine/FragmentShaders/TextureShader.frag")
                 },
                 {
+                    ShaderTypeEnum.TextureWithLight,
+                    new Shader("Engine/VertexShaders/MainVertexShader.vert", "Engine/FragmentShaders/TextureShaderWithLight.frag")
+                },
+                {
                     ShaderTypeEnum.Wireframe,
                     new Shader("Engine/VertexShaders/WireframeVertexShader.vert", "Engine/FragmentShaders/WireframeShader.frag")
                 }

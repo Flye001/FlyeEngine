@@ -22,7 +22,7 @@ namespace TestGame
 
             var game = new FlyeEngine.FlyeEngine(1920, 1080, "Test Game");
 
-            var scene = new CoffeeShack(game);
+            var scene = new TestVillage(game);
             scene.StartGame();
         }
 
