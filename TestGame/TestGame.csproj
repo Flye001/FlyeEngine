@@ -960,10 +960,10 @@
     <None Update="MyObjects\peach\7F0DBBD7_c.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="MyObjects\peach\material.mtl">
+    <None Update="MyObjects\peach\peach.mtl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="MyObjects\peach\object.obj">
+    <None Update="MyObjects\peach\peach.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="MyObjects\plane2\airplane_body_diffuse_v1.jpg">
