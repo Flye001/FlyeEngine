@@ -1,7 +1,6 @@
 ﻿using FlyeEngine;
 using FlyeEngine.GraphicsEngine;
 using OpenTK.Mathematics;
-using OpenTK.Windowing.GraphicsLibraryFramework;
 using TestGame.MyScenes;
 
 namespace TestGame

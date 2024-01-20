@@ -55,6 +55,17 @@ namespace FlyeEngine
             }
         }
 
+        private Vector3 _lightColor;
+        public Vector3 LightColor
+        {
+            get => _lightColor;
+            set
+            {
+                _lightColor = value;
+                _graphicsEngine.SetShaderUniformVector3("lightColor", _lightColor);
+            }
+        }
+
         /// <summary>
         /// Create new game instance
         /// </summary>
@@ -90,7 +101,9 @@ namespace FlyeEngine
             _meshCollection = new Dictionary<string, Mesh>();
 
             _lightPosition = Vector3.Zero;
+            _lightColor = Vector3.One;
             _graphicsEngine.SetShaderUniformVector3("lightPosition", _lightPosition);
+            _graphicsEngine.SetShaderUniformVector3("lightColor", _lightColor);
         }
 
         private void UpdateFrame(float deltaTime)
@@ -108,6 +121,7 @@ namespace FlyeEngine
 
                 _gameCamera.HandleInput(keyboardState, mouseState, deltaTime);
                 _graphicsEngine.UpdateViewMatrix(_gameCamera.GetViewMatrix());
+                _graphicsEngine.SetShaderUniformVector3("viewPosition", _gameCamera.Position);
             }
 
             if (_printCameraPosition)

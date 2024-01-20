@@ -9,9 +9,18 @@ namespace TestGame.MyScenes
     {
         public CoffeeShack(FlyeEngine.FlyeEngine engine) : base(engine)
         {
-            Engine.LightPosition = new Vector3(-2.6f, 6.3f, 3.2f);
+            var lightPosition = new Vector3(17f, 17f, 22f);
+            Engine.LightPosition = lightPosition;
+            Engine.LightColor = new Vector3(1f, 1f, 1f);
 
-            Engine.AddGameObjectFromWavefront(new Transform(), "MyObjects\\coffeeHouse", ShaderTypeEnum.SingleColorWithLight);
+            Engine.AddGameObjectFromWavefront(new Transform() {Scale = new(2f)}, "MyObjects\\coffeeHouse", ShaderTypeEnum.SingleColorWithLight);
+
+            Engine.AddGameObjectFromWavefront(new Transform() { Position = new(-4, 7, 17) }, "MyObjects\\sphere",
+                ShaderTypeEnum.SingleColorWithLight);
+
+            // "Sun"
+            Engine.AddGameObjectFromWavefront(new Transform() { Position = lightPosition, Scale = new(0.1f) },
+                "MyObjects\\cube", ShaderTypeEnum.SingleColor);
         }
 
         public override void OnUpdate(float deltaTime, KeyboardState kb)
