@@ -9,7 +9,7 @@ namespace FlyeEngine.GraphicsEngine
         /// </summary>
         public string Name { get; set; } = string.Empty;
         /// <summary>
-        /// Specular Illumination Value
+        /// Specular Illumination Exponent
         /// </summary>
         public float Ns { get; set; }
         /// <summary>

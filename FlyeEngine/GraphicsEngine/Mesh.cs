@@ -136,9 +136,17 @@ namespace FlyeEngine.GraphicsEngine
                                 gpuVertices.Add(textureLayerId);
                                 gpuVertices.Add(tempTextures[i].X);
                                 gpuVertices.Add(tempTextures[i].Y);
+                                gpuVertices.Add(currentMaterial.Ka.X);
+                                gpuVertices.Add(currentMaterial.Ka.Y);
+                                gpuVertices.Add(currentMaterial.Ka.Z);
                                 gpuVertices.Add(currentMaterial.Kd.X);
                                 gpuVertices.Add(currentMaterial.Kd.Y);
                                 gpuVertices.Add(currentMaterial.Kd.Z);
+                                gpuVertices.Add(currentMaterial.Ks.X);
+                                gpuVertices.Add(currentMaterial.Ks.Y);
+                                gpuVertices.Add(currentMaterial.Ks.Z);
+                                gpuVertices.Add(currentMaterial.Ns);
+                                gpuVertices.Add(currentMaterial.Illumination);
                             }
                         }
                         // face has no texture data
@@ -160,9 +168,17 @@ namespace FlyeEngine.GraphicsEngine
                                 gpuVertices.Add(0);
                                 gpuVertices.Add(0);
                                 gpuVertices.Add(0);
+                                gpuVertices.Add(currentMaterial.Ka.X);
+                                gpuVertices.Add(currentMaterial.Ka.Y);
+                                gpuVertices.Add(currentMaterial.Ka.Z);
                                 gpuVertices.Add(currentMaterial.Kd.X);
                                 gpuVertices.Add(currentMaterial.Kd.Y);
                                 gpuVertices.Add(currentMaterial.Kd.Z);
+                                gpuVertices.Add(currentMaterial.Ks.X);
+                                gpuVertices.Add(currentMaterial.Ks.Y);
+                                gpuVertices.Add(currentMaterial.Ks.Z);
+                                gpuVertices.Add(currentMaterial.Ns);
+                                gpuVertices.Add(currentMaterial.Illumination);
                             }
                         }
                         break;
@@ -176,17 +192,29 @@ namespace FlyeEngine.GraphicsEngine
             GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBufferObject);
 
             // Vertices
-            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 12 * sizeof(float), 0);
+            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 20 * sizeof(float), 0);
             GL.EnableVertexAttribArray(0);
             // Normals
-            GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 12 * sizeof(float), 3 * sizeof(float));
+            GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 20 * sizeof(float), 3 * sizeof(float));
             GL.EnableVertexAttribArray(1);
             // Textures
-            GL.VertexAttribPointer(2, 3, VertexAttribPointerType.Float, false, 12 * sizeof(float), 6 * sizeof(float));
+            GL.VertexAttribPointer(2, 3, VertexAttribPointerType.Float, false, 20 * sizeof(float), 6 * sizeof(float));
             GL.EnableVertexAttribArray(2);
-            // Colors
-            GL.VertexAttribPointer(3, 3, VertexAttribPointerType.Float, false, 12 * sizeof(float), 9 * sizeof(float));
+            // Ambient Lighting
+            GL.VertexAttribPointer(3, 3, VertexAttribPointerType.Float, false, 20 * sizeof(float), 9 * sizeof(float));
             GL.EnableVertexAttribArray(3);
+            // Diffuse Lighting
+            GL.VertexAttribPointer(4, 3, VertexAttribPointerType.Float, false, 20 * sizeof(float), 12 * sizeof(float));
+            GL.EnableVertexAttribArray(4);
+            // Specular Lighting
+            GL.VertexAttribPointer(5, 3, VertexAttribPointerType.Float, false, 20 * sizeof(float), 15 * sizeof(float));
+            GL.EnableVertexAttribArray(5);
+            // Specular Exponent
+            GL.VertexAttribPointer(6, 1, VertexAttribPointerType.Float, false, 20 * sizeof(float), 18 * sizeof(float));
+            GL.EnableVertexAttribArray(6);
+            // Illumination Model
+            GL.VertexAttribPointer(7, 1, VertexAttribPointerType.Float, false, 20 * sizeof(float), 19 * sizeof(float));
+            GL.EnableVertexAttribArray(7);
 
             var vertexArray = gpuVertices.ToArray();
             var numOfVertices = vertexArray.Length;
