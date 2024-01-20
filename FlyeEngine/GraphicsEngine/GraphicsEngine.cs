@@ -24,20 +24,20 @@ namespace FlyeEngine.GraphicsEngine
             {
                 {
                     ShaderTypeEnum.SingleColor,
-                    new Shader("Engine/Shaders/MainVertexShader.vert", "Engine/Shaders/SingleColorShader.frag")
+                    new Shader("Engine/VertexShaders/MainVertexShader.vert", "Engine/FragmentShaders/SingleColorShader.frag")
                 },
                 {
                     ShaderTypeEnum.SingleColorWithLight,
-                    new Shader("Engine/Shaders/MainVertexShader.vert",
-                        "Engine/Shaders/SingleColorWithLightShader.frag")
+                    new Shader("Engine/VertexShaders/MainVertexShader.vert",
+                        "Engine/FragmentShaders/SingleColorWithLightShader.frag")
                 },
                 { 
                     ShaderTypeEnum.Texture, 
-                    new Shader("Engine/Shaders/MainVertexShader.vert", "Engine/Shaders/TextureShader.frag")
+                    new Shader("Engine/VertexShaders/MainVertexShader.vert", "Engine/FragmentShaders/TextureShader.frag")
                 },
                 {
                     ShaderTypeEnum.Wireframe,
-                    new Shader("Engine/Shaders/WireframeVertexShader.vert", "Engine/Shaders/WireframeShader.frag")
+                    new Shader("Engine/VertexShaders/WireframeVertexShader.vert", "Engine/FragmentShaders/WireframeShader.frag")
                 }
             };
 

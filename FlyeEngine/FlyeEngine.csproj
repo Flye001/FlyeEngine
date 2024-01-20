@@ -13,22 +13,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Engine\Shaders\SingleColorShader.frag">
+    <None Update="Engine\FragmentShaders\SingleColorShader.frag">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Engine\Shaders\MainVertexShader.vert">
+    <None Update="Engine\VertexShaders\MainVertexShader.vert">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Engine\Shaders\SingleColorWithLightShader.frag">
+    <None Update="Engine\FragmentShaders\SingleColorWithLightShader.frag">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Engine\Shaders\TextureShader.frag">
+    <None Update="Engine\FragmentShaders\TextureShader.frag">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Engine\Shaders\WireframeShader.frag">
+    <None Update="Engine\FragmentShaders\WireframeShader.frag">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Engine\Shaders\WireframeVertexShader.vert">
+    <None Update="Engine\VertexShaders\WireframeVertexShader.vert">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
