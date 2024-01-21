@@ -72,12 +72,15 @@ namespace TestGame.MyScenes
             {
                 for (var h = 0; h < height; h++)
                 {
-                    Engine.AddGameObjectFromWavefront(new() { Scale = new(10f), Position = new(gapSize * w, 0, gapSize * h), Rotation = new(0, rotations[h, w], 0) }, buildings[layout[h, w]],
+                    var o = Engine.AddGameObjectFromWavefront(new() { Scale = new(10f), Position = new(gapSize * w, 0, gapSize * h), Rotation = new(0, rotations[h, w], 0) }, buildings[layout[h, w]],
                         ShaderTypeEnum.TextureWithLight);
+                    o.AddBoxCollider(new Vector3(20, 1, 20), new Vector3(0, 0.5f, 0));
                 }
             }
 
-            Engine.AddGameObjectFromWavefront(new Transform() {Scale = new(10), Position = new(0, 1.4f, 20)}, buildings["policeCar"], ShaderTypeEnum.TextureWithLight);
+            var policeCar = Engine.AddGameObjectFromWavefront(new Transform() {Scale = new(10), Position = new(0, 3f, 20)}, buildings["policeCar"], ShaderTypeEnum.TextureWithLight);
+            policeCar.AddBoxCollider(new Vector3(4,4,9), new Vector3(0, 1.5f, 0));
+            policeCar.AddRigidBody(5);
             Engine.AddGameObjectFromWavefront(new Transform() {Scale = new(10), Position = new(0, 1.4f, 35)}, buildings["hatchback"], ShaderTypeEnum.TextureWithLight);
             Engine.AddGameObjectFromWavefront(new Transform() {Scale = new(10), Position = new(0, 1.4f, 50)}, buildings["stationwagon"], ShaderTypeEnum.TextureWithLight);
             Engine.AddGameObjectFromWavefront(new Transform() {Scale = new(10), Position = new(0, 1.4f, 65)}, buildings["sedan"], ShaderTypeEnum.TextureWithLight);

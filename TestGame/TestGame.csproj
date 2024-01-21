@@ -924,10 +924,10 @@
     <None Update="MyObjects\cube\cube.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="MyObjects\harrypotter\material.mtl">
+    <None Update="MyObjects\harrypotter\hp.mtl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="MyObjects\harrypotter\object.obj">
+    <None Update="MyObjects\harrypotter\hp.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="MyObjects\mountains.obj">

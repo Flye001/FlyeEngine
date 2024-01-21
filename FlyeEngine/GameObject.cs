@@ -7,18 +7,11 @@ namespace FlyeEngine
     public class GameObject
     {
         public Vector3 Position { get; private set; }
-        //public Vector3 Position
-        //{
-        //    get => _position;
-        //    set
-        //    {
-        //        _position = value;
-        //        UpdateModelMatrix();
-        //    }
-        //}
+        public Vector3 PreviousPosition { get; private set; }
 
         public void UpdatePosition(Vector3 position)
         {
+            PreviousPosition = Position;
             Position = position;
             BoxCollider?.UpdatePosition(position);
             UpdateModelMatrix();
@@ -54,12 +47,12 @@ namespace FlyeEngine
 
         public RigidBody? RigidBody;
         public BoxCollider? BoxCollider;
-        public bool HasBoxCollider => BoxCollider != null;
         public Matrix4? ColliderModelMatrix => BoxCollider?.ModelMatrix;
 
         public GameObject(Vector3 position, Vector3 rotation, Vector3 scale)
         {
             Position = position;
+            PreviousPosition = position;
             _rotation = rotation;
             _scale = scale;
 
@@ -69,6 +62,7 @@ namespace FlyeEngine
         public GameObject(Vector3 position, Vector3 rotation, Vector3 scale, Mesh mesh, ShaderTypeEnum shader)
         {
             Position = position;
+            PreviousPosition = position;
             _rotation = rotation;
             _scale = scale;
             _mesh = mesh;

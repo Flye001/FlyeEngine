@@ -130,7 +130,7 @@ namespace FlyeEngine
             }
             
 
-            _physicsEngine.CheckCollisions(_sceneObjects.Where(x => x.HasBoxCollider));
+            _physicsEngine.CheckCollisions(_sceneObjects.Where(x => x.RigidBody != null), _sceneObjects.Where(x => x.BoxCollider != null));
 
             // Run game objects' update method
             foreach (var sceneObject in _sceneObjects)
@@ -152,7 +152,7 @@ namespace FlyeEngine
 
                 sceneObject.Render();
 
-                if (sceneObject.HasBoxCollider && _renderColliderWireframes)
+                if (sceneObject.BoxCollider != null && _renderColliderWireframes)
                 {
                     _graphicsEngine.UseShader(ShaderTypeEnum.Wireframe);
                     _graphicsEngine.SetShaderUniformMatrix4(ShaderTypeEnum.Wireframe, "modelMatrix",

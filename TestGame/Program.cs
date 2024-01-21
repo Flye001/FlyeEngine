@@ -14,16 +14,17 @@ namespace TestGame
         {
             Console.WriteLine("Hello, World!");
 
+            //var myCamera = new StaticCamera(new Vector3(0f, 50f, 0f), new Vector3(50, 0, 50));
             var myCamera = new StaticCamera(new Vector3(0f, 20f, -25f), Vector3.Zero);
-            //var game = new FlyeEngine.FlyeEngine(1920, 1080, "Test Game", myCamera);
+            var game = new FlyeEngine.FlyeEngine(1920, 1080, "Test Game", myCamera);
 
-            //var scene = new FallingCubes(game);
-            //scene.StartGame();
-
-            var game = new FlyeEngine.FlyeEngine(1920, 1080, "Test Game");
-
-            var scene = new TestVillage(game);
+            var scene = new FallingCubes(game);
             scene.StartGame();
+
+            //var game = new FlyeEngine.FlyeEngine(1920, 1080, "Test Game");
+
+            //var scene = new TestVillage(game);
+            //scene.StartGame();
         }
 
         private void SpyroMarioLevel(FlyeEngine.FlyeEngine game)
