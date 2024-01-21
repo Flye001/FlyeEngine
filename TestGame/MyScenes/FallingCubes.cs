@@ -49,22 +49,22 @@ namespace TestGame.MyScenes
             if (kb.IsKeyDown(Keys.A))
             {
                 //_plane.UpdatePosition(_plane.Position + new Vector3(Speed * deltaTime, 0f, 0f));
-                _plane.RigidBody.AddForce(new Vector3(5f * deltaTime, 0f, 0f));
+                _plane.RigidBody.AddForce(new Vector3(Speed * deltaTime, 0f, 0f));
             }
             if (kb.IsKeyDown(Keys.D))
             {
                 //_plane.UpdatePosition(_plane.Position - new Vector3(Speed * deltaTime, 0f, 0f));
-                _plane.RigidBody.AddForce(new Vector3(-5f * deltaTime, 0f, 0f));
+                _plane.RigidBody.AddForce(new Vector3(-Speed * deltaTime, 0f, 0f));
             }
             if (kb.IsKeyDown(Keys.W))
             {
                 //_plane.UpdatePosition(_plane.Position + new Vector3(0f, 0f, Speed * deltaTime));
-                _plane.RigidBody.AddForce(new Vector3(0f, 0f, 5f * deltaTime));
+                _plane.RigidBody.AddForce(new Vector3(0f, 0f, Speed * deltaTime));
             }
             if (kb.IsKeyDown(Keys.S))
             {
                 //_plane.UpdatePosition(_plane.Position - new Vector3(0f, 0f, Speed * deltaTime));
-                _plane.RigidBody.AddForce(new Vector3(0f, 0f, -5f * deltaTime));
+                _plane.RigidBody.AddForce(new Vector3(0f, 0f, -Speed * deltaTime));
             }
         }
     }
