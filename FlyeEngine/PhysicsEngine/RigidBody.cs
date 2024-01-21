@@ -29,20 +29,20 @@ namespace FlyeEngine.PhysicsEngine
         {
             // s = ut + 1/2 * a * t^2
 
-            if (IsColliding) return;
+            //if (IsColliding) return;
 
-            if (IsColliding && Vector3.Dot(Velocity, CollisionNormal) > 0)
-            {
-                Velocity -= Vector3.Dot(Velocity, CollisionNormal) * CollisionNormal;
-            }
+            //if (IsColliding && Vector3.Dot(Velocity, CollisionNormal) > 0)
+            //{
+            //    Velocity -= Vector3.Dot(Velocity, CollisionNormal) * CollisionNormal;
+            //}
 
             // Check collisions
             var movement = Velocity * deltaTime + 0.5f * Acceleration * deltaTime * deltaTime;
             // If the movement is in the direction of the collision, don't move
-            //if (Vector3.Dot(movement, CollisionNormal) > 0)
-            //{
-            //    movement -= Vector3.Dot(movement, CollisionNormal) * CollisionNormal;
-            //}
+            if (Vector3.Dot(movement, CollisionNormal) > 0)
+            {
+                movement -= Vector3.Dot(movement, CollisionNormal) * CollisionNormal;
+            }
 
 
             // Update Position
