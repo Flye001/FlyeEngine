@@ -22,7 +22,7 @@ namespace TestGame.MyScenes
             {
                 var transform = new Transform()
                 {
-                    Position = new(15 + -5f * i, 30f + i * 7, -3f)
+                    Position = new(15 + -5f * i, 10f + i * 5, -3f)
                 };
                 var cube = Engine.AddGameObjectFromWavefront(transform, "MyObjects\\cube\\cube", ShaderTypeEnum.SingleColorWithLight);
                 cube.AddRigidBody(2f);
@@ -30,7 +30,7 @@ namespace TestGame.MyScenes
             }
 
             _plane =
-                Engine.AddGameObjectFromWavefront(new Transform() { Position = new Vector3(-5f, 2f, 0f) }, "MyObjects\\cube\\cube", ShaderTypeEnum.SingleColorWithLight);
+                Engine.AddGameObjectFromWavefront(new Transform() { Position = new Vector3(-5f, 5f, 0f) }, "MyObjects\\cube\\cube", ShaderTypeEnum.SingleColorWithLight);
             _plane.AddBoxCollider(new Vector3(3f), Vector3.Zero);
             _plane.AddRigidBody(5);
             //solidCube.AddBoxCollider(new Vector3(2f), Vector3.Zero);

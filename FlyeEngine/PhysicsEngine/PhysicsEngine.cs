@@ -14,7 +14,7 @@ namespace FlyeEngine.PhysicsEngine
             {
                 var a = objectsToCheck.Dequeue();
                 if (a.BoxCollider == null) continue;
-
+                a.RigidBody.CollisionNormal.Clear();
                 foreach (var b in objectsWithColliders)
                 {
                     if (a == b) continue;
@@ -27,11 +27,6 @@ namespace FlyeEngine.PhysicsEngine
                         a.BoxCollider.MinZ <= b.BoxCollider.MaxZ &&
                         a.BoxCollider.MaxZ >= b.BoxCollider.MinZ)
                     {
-                        // Calculate the overlap along each axis
-                        //float overlapX = Math.Min(a.BoxCollider.MaxX - b.BoxCollider.MinX, b.BoxCollider.MaxX - a.BoxCollider.MinX);
-                        //float overlapY = Math.Min(a.BoxCollider.MaxY - b.BoxCollider.MinY, b.BoxCollider.MaxY - a.BoxCollider.MinY);
-                        //float overlapZ = Math.Min(a.BoxCollider.MaxZ - b.BoxCollider.MinZ, b.BoxCollider.MaxZ - a.BoxCollider.MinZ);
-
                         Vector3 collisionNormal = Vector3.Zero;
 
                         if (Math.Abs(a.BoxCollider.MinX - b.BoxCollider.MaxX) < tolerance)
@@ -47,7 +42,7 @@ namespace FlyeEngine.PhysicsEngine
                         else if (Math.Abs(a.BoxCollider.MaxZ - b.BoxCollider.MinZ) < tolerance)
                             collisionNormal = new Vector3(0, 0, 1);
 
-                        a.RigidBody.CollisionNormal = collisionNormal;
+                        a.RigidBody.CollisionNormal.Add(collisionNormal);
                     }
                 }
             }
