@@ -7,6 +7,8 @@ namespace TestGame.MyScenes
 {
     internal class TestVillage : Scene
     {
+        private const float PoliceSpeed = 15f;
+        private readonly GameObject _policeCar;
         public TestVillage(FlyeEngine.FlyeEngine engine) : base(engine)
         {
             var lightPosition = new Vector3(-23, 34, 18);
@@ -74,35 +76,29 @@ namespace TestGame.MyScenes
                 {
                     var o = Engine.AddGameObjectFromWavefront(new() { Scale = new(10f), Position = new(gapSize * w, 0, gapSize * h), Rotation = new(0, rotations[h, w], 0) }, buildings[layout[h, w]],
                         ShaderTypeEnum.TextureWithLight);
-                    o.AddBoxCollider(new Vector3(20, 1, 20), new Vector3(0, 0.5f, 0));
+                    //o.AddBoxCollider(new Vector3(20, 1, 20), new Vector3(0, 0.5f, 0));
                 }
             }
 
-            var policeCar = Engine.AddGameObjectFromWavefront(new Transform() {Scale = new(10), Position = new(0, 3f, 20)}, buildings["policeCar"], ShaderTypeEnum.TextureWithLight);
-            policeCar.AddBoxCollider(new Vector3(4,4,9), new Vector3(0, 1.5f, 0));
-            policeCar.AddRigidBody(5);
-            Engine.AddGameObjectFromWavefront(new Transform() {Scale = new(10), Position = new(0, 1.4f, 35)}, buildings["hatchback"], ShaderTypeEnum.TextureWithLight);
-            Engine.AddGameObjectFromWavefront(new Transform() {Scale = new(10), Position = new(0, 1.4f, 50)}, buildings["stationwagon"], ShaderTypeEnum.TextureWithLight);
-            Engine.AddGameObjectFromWavefront(new Transform() {Scale = new(10), Position = new(0, 1.4f, 65)}, buildings["sedan"], ShaderTypeEnum.TextureWithLight);
+            var ground = Engine.AddGameObject(new Transform());
+            ground.AddBoxCollider(new Vector3(100, 1f, 100), new Vector3(40, 0.5f, 40));
 
-            //for (var i = 0; i < 3; i++)
-            //{
-            //    Engine.AddGameObjectFromWavefront(new() { Scale = new(10f), Position = new(gapSize * i, 0, 0) }, "MyObjects\\CityKit\\building_A",
-            //        ShaderTypeEnum.TextureWithLight);
-            //}
-            //for (var i = 0; i < 3; i++)
-            //{
-            //    Engine.AddGameObjectFromWavefront(new() { Scale = new(10f), Rotation = new(0f, float.Pi / 2f, 0f), Position = new(gapSize * i, 0, gapSize) }, "MyObjects\\CityKit\\road_straight",
-            //        ShaderTypeEnum.TextureWithLight);
-            //}
-            //for (var i = 0; i < 3; i++)
-            //{
-            //    Engine.AddGameObjectFromWavefront(new() { Scale = new(10f), Rotation = new(0f, float.Pi / 2f, 0f), Position = new(gapSize * i, 0, gapSize * 2) }, "MyObjects\\CityKit\\base",
-            //        ShaderTypeEnum.TextureWithLight);
-            //}
+            _policeCar = Engine.AddGameObjectFromWavefront(new Transform() {Scale = new(10), Position = new(0, 3f, 20)}, buildings["policeCar"], ShaderTypeEnum.TextureWithLight);
+            _policeCar.AddBoxCollider(new Vector3(4,4,9), new Vector3(0, 1.5f, 0));
+            _policeCar.AddRigidBody(5);
 
-            //Engine.AddGameObjectFromWavefront(new Transform() {Scale = new(5f)}, "MyObjects\\ModularVillage\\Prop_Barrel_1.obj",
-            //    "MyObjects\\ModularVillage\\Prop_Barrel_1.mtl", ShaderTypeEnum.SingleColorWithLight);
+            var car1 = Engine.AddGameObjectFromWavefront(new Transform() {Scale = new(10), Position = new(0, 1.4f, 35)}, buildings["hatchback"], ShaderTypeEnum.TextureWithLight);
+            car1.AddBoxCollider(new Vector3(4, 4, 8), new Vector3(0, 1.5f, 0));
+            car1.AddRigidBody(5);
+
+            var car2 = Engine.AddGameObjectFromWavefront(new Transform() {Scale = new(10), Position = new(0, 1.4f, 50)}, buildings["stationwagon"], ShaderTypeEnum.TextureWithLight);
+            car2.AddBoxCollider(new Vector3(4, 4, 9), new Vector3(0, 1.5f, 0));
+            car2.AddRigidBody(5);
+
+            var car3 = Engine.AddGameObjectFromWavefront(new Transform() {Scale = new(10), Position = new(0, 1.4f, 65)}, buildings["sedan"], ShaderTypeEnum.TextureWithLight);
+            car3.AddBoxCollider(new Vector3(4, 4, 9), new Vector3(0, 1.5f, 0));
+            car3.AddRigidBody(5);
+
 
             //Engine.AddGameObjectFromWavefront(new Transform() { Position = new(5f, 0f, 5f) },
             //    "MyObjects\\PlatformerPack\\Tower.obj", "MyObjects\\PlatformerPack\\Tower.mtl",
@@ -115,7 +111,26 @@ namespace TestGame.MyScenes
 
         public override void OnUpdate(float deltaTime, KeyboardState kb)
         {
-            //
+            if (kb.IsKeyDown(Keys.W))
+            {
+                _policeCar.RigidBody.AddForce(new Vector3(0, 0, PoliceSpeed * deltaTime));
+            }
+            if (kb.IsKeyDown(Keys.S))
+            {
+                _policeCar.RigidBody.AddForce(new Vector3(0, 0, -PoliceSpeed * deltaTime));
+            }
+            if (kb.IsKeyDown(Keys.A))
+            {
+                _policeCar.RigidBody.AddForce(new Vector3(PoliceSpeed * deltaTime, 0, 0));
+            }
+            if (kb.IsKeyDown(Keys.D))
+            {
+                _policeCar.RigidBody.AddForce(new Vector3(-PoliceSpeed * deltaTime, 0, 0));
+            }
+            if (kb.IsKeyReleased(Keys.Space))
+            {
+                _policeCar.RigidBody.AddForce(new Vector3(0, 5, 0));
+            }
         }
     }
 }

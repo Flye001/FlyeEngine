@@ -18,12 +18,7 @@ namespace FlyeEngine.PhysicsEngine
         {
             Velocity += force;
         }
-
-        public void AddAcceleration(Vector3 a)
-        {
-            Acceleration += a;
-        }
-
+        
         public void Update(Action<Vector3> updatePosition, Vector3 currentPosition, float deltaTime)
         {
             // s = ut + 1/2 * a * t^2
