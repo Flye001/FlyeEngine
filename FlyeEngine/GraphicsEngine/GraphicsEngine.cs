@@ -160,16 +160,16 @@ namespace FlyeEngine.GraphicsEngine
 
             // Record?
 
-            Bitmap bmp = new Bitmap(ClientSize.X, ClientSize.Y);
-            BitmapData data = bmp.LockBits(new Rectangle(0, 0, ClientSize.X, ClientSize.Y),
-                ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+            //Bitmap bmp = new Bitmap(ClientSize.X, ClientSize.Y);
+            //BitmapData data = bmp.LockBits(new Rectangle(0, 0, ClientSize.X, ClientSize.Y),
+            //    ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
 
-            GL.ReadPixels(0, 0, ClientSize.X, ClientSize.Y, PixelFormat.Bgr, PixelType.UnsignedByte, data.Scan0);
+            //GL.ReadPixels(0, 0, ClientSize.X, ClientSize.Y, PixelFormat.Bgr, PixelType.UnsignedByte, data.Scan0);
 
-            bmp.UnlockBits(data);
-            bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
-            bmp.Save($"screenshots/{count}.png", ImageFormat.Png);
-            count++;
+            //bmp.UnlockBits(data);
+            //bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
+            //bmp.Save($"screenshots/{count}.png", ImageFormat.Png);
+            //count++;
 
             // ffmpeg -framerate 60 -i %d.png -c:v libx264 -r 60 output.mp4
         }
