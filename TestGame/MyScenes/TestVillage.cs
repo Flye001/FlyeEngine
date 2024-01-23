@@ -86,9 +86,10 @@ namespace TestGame.MyScenes
             var ground = Engine.AddGameObject(new Transform());
             ground.AddBoxCollider(new Vector3(100, 1f, 100), new Vector3(40, 0.5f, 40));
 
-            _policeCar = Engine.AddGameObjectFromWavefront(new Transform() {Scale = new(10), Position = new(0, 3f, 20)}, buildings["policeCar"], ShaderTypeEnum.TextureWithLight);
-            _policeCar.AddBoxCollider(new Vector3(4,4,9), new Vector3(0, 1.5f, 0));
+            _policeCar = Engine.AddGameObjectFromWavefront(new Transform() { Scale = new(10), Position = new(0, 3f, 20) }, buildings["policeCar"], ShaderTypeEnum.TextureWithLight);
+            _policeCar.AddBoxCollider(new Vector3(4, 4, 9), new Vector3(0, 1.5f, 0));
             _policeCar.AddRigidBody(5);
+            _policeCar.AddScript(new CarMovementScript(_policeCar));
 
             _car1 = Engine.AddGameObjectFromWavefront(new Transform() {Scale = new(10), Position = new(0, 1.4f, 35)}, buildings["hatchback"], ShaderTypeEnum.TextureWithLight);
             _car1.AddBoxCollider(new Vector3(4, 4, 8), new Vector3(0, 1.5f, 0));
@@ -99,9 +100,9 @@ namespace TestGame.MyScenes
             var car2 = Engine.AddGameObjectFromWavefront(new Transform() {Scale = new(10), Position = new(0, 1.4f, 50)}, buildings["stationwagon"], ShaderTypeEnum.TextureWithLight);
             car2.AddBoxCollider(new Vector3(4, 4, 9), new Vector3(0, 1.5f, 0));
             car2.AddRigidBody(5);
-            //car2.AddScript(new CarMovementScript(car2));
+            car2.AddScript(new CarMovementScript(car2));
 
-            var car3 = Engine.AddGameObjectFromWavefront(new Transform() {Scale = new(10), Position = new(0, 1.4f, 65)}, buildings["sedan"], ShaderTypeEnum.TextureWithLight);
+            var car3 = Engine.AddGameObjectFromWavefront(new Transform() { Scale = new(10), Position = new(0, 1.4f, 65) }, buildings["sedan"], ShaderTypeEnum.TextureWithLight);
             car3.AddBoxCollider(new Vector3(4, 4, 9), new Vector3(0, 1.5f, 0));
             car3.AddRigidBody(5);
             car3.AddScript(new LinearCarMovementScript(car3));

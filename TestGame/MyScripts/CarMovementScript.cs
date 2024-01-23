@@ -6,7 +6,7 @@ namespace TestGame.MyScripts
     internal class CarMovementScript : Script
     {
         private int _carDirection;
-        private const float Speed = 0.4f;
+        private const float Speed = 1f / 3.5f;
 
         private float t = 0; // Parameter for Bezier curve
         private Vector3[] controlPoints = new Vector3[4]; // Control points for Bezier curve
@@ -19,6 +19,8 @@ namespace TestGame.MyScripts
             controlPoints[1] = new Vector3(-10, 0, 50);
             controlPoints[2] = new Vector3(10, 0, 50);
             controlPoints[3] = new Vector3(0, 0, 80);
+
+            t = (self.Position.Z - 20) / 60;
         }
 
         public override void OnUpdate(float deltaTime)
