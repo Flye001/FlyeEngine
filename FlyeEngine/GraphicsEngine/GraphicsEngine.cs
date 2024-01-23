@@ -143,8 +143,8 @@ namespace FlyeEngine.GraphicsEngine
         {
             base.OnUpdateFrame(args);
 
-            //_update((float)args.Time);
-            _update(1 / 60f);
+            _update((float)args.Time);
+            //_update(1 / 60f);
         }
 
         protected override void OnRenderFrame(FrameEventArgs args)
