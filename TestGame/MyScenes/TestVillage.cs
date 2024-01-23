@@ -99,12 +99,12 @@ namespace TestGame.MyScenes
             var car2 = Engine.AddGameObjectFromWavefront(new Transform() {Scale = new(10), Position = new(0, 1.4f, 50)}, buildings["stationwagon"], ShaderTypeEnum.TextureWithLight);
             car2.AddBoxCollider(new Vector3(4, 4, 9), new Vector3(0, 1.5f, 0));
             car2.AddRigidBody(5);
-            car2.AddScript(new CarMovementScript(car2));
+            //car2.AddScript(new CarMovementScript(car2));
 
             var car3 = Engine.AddGameObjectFromWavefront(new Transform() {Scale = new(10), Position = new(0, 1.4f, 65)}, buildings["sedan"], ShaderTypeEnum.TextureWithLight);
             car3.AddBoxCollider(new Vector3(4, 4, 9), new Vector3(0, 1.5f, 0));
             car3.AddRigidBody(5);
-            car3.AddScript(new CarMovementScript(car3));
+            car3.AddScript(new LinearCarMovementScript(car3));
 
 
             //Engine.AddGameObjectFromWavefront(new Transform() { Position = new(5f, 0f, 5f) },
@@ -118,26 +118,26 @@ namespace TestGame.MyScenes
 
         public override void OnUpdate(float deltaTime, KeyboardState kb)
         {
-            if (kb.IsKeyDown(Keys.W))
-            {
-                _policeCar.RigidBody.AddForce(new Vector3(0, 0, PoliceSpeed * deltaTime));
-            }
-            if (kb.IsKeyDown(Keys.S))
-            {
-                _policeCar.RigidBody.AddForce(new Vector3(0, 0, -PoliceSpeed * deltaTime));
-            }
-            if (kb.IsKeyDown(Keys.A))
-            {
-                _policeCar.RigidBody.AddForce(new Vector3(PoliceSpeed * deltaTime, 0, 0));
-            }
-            if (kb.IsKeyDown(Keys.D))
-            {
-                _policeCar.RigidBody.AddForce(new Vector3(-PoliceSpeed * deltaTime, 0, 0));
-            }
-            if (kb.IsKeyReleased(Keys.Space))
-            {
-                _policeCar.RigidBody.AddForce(new Vector3(0, 5, 0));
-            }
+            //if (kb.IsKeyDown(Keys.W))
+            //{
+            //    _policeCar.RigidBody.AddForce(new Vector3(0, 0, PoliceSpeed * deltaTime));
+            //}
+            //if (kb.IsKeyDown(Keys.S))
+            //{
+            //    _policeCar.RigidBody.AddForce(new Vector3(0, 0, -PoliceSpeed * deltaTime));
+            //}
+            //if (kb.IsKeyDown(Keys.A))
+            //{
+            //    _policeCar.RigidBody.AddForce(new Vector3(PoliceSpeed * deltaTime, 0, 0));
+            //}
+            //if (kb.IsKeyDown(Keys.D))
+            //{
+            //    _policeCar.RigidBody.AddForce(new Vector3(-PoliceSpeed * deltaTime, 0, 0));
+            //}
+            //if (kb.IsKeyReleased(Keys.Space))
+            //{
+            //    _policeCar.RigidBody.AddForce(new Vector3(0, 5, 0));
+            //}
         }
 
     }
