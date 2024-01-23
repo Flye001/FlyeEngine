@@ -14,19 +14,36 @@ namespace TestGame.MyScripts
             {
                 case 0:
                     Self.UpdatePosition(Self.Position + new Vector3(0, 0, Speed * deltaTime));
-                    if (Self.Position.Z >= 80) _carDirection++;
+                    if (Self.Position.Z >= 80)
+                    {
+                        _carDirection++;
+                        Self.Rotation += new Vector3(0, float.Pi / 2f, 0);
+                    }
                     break;
                 case 1:
                     Self.UpdatePosition(Self.Position + new Vector3(Speed * deltaTime, 0, 0));
-                    if (Self.Position.X >= 80) _carDirection++;
+                    if (Self.Position.X >= 80)
+                    {
+                        _carDirection++;
+                        Self.Rotation += new Vector3(0, float.Pi / 2f, 0);
+                    }
+                    break;
+                
+                case 2:
+                    Self.UpdatePosition(Self.Position + new Vector3(0, 0, -Speed * deltaTime));
+                    if (Self.Position.Z <= 20)
+                    {
+                        _carDirection++;
+                        Self.Rotation += new Vector3(0, float.Pi / 2f, 0);
+                    }
                     break;
                 case 3:
                     Self.UpdatePosition(Self.Position + new Vector3(-Speed * deltaTime, 0, 0));
-                    if (Self.Position.X <= 0) _carDirection++;
-                    break;
-                case 2:
-                    Self.UpdatePosition(Self.Position + new Vector3(0, 0, -Speed * deltaTime));
-                    if (Self.Position.Z <= 20) _carDirection++;
+                    if (Self.Position.X <= 0)
+                    {
+                        _carDirection++;
+                        Self.Rotation += new Vector3(0, float.Pi / 2f, 0);
+                    }
                     break;
             }
         }
