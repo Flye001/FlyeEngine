@@ -20,7 +20,7 @@ namespace TestGame
             //scene.StartGame();
 
             var myCamera = new StaticCamera(new Vector3(0f, 50f, 0f), new Vector3(50, 0, 50));
-            var game = new FlyeEngine.FlyeEngine(1920, 1080, "Test Game", myCamera);
+            var game = new FlyeEngine.FlyeEngine(1920, 1080, "Test Game");
             var scene = new TestVillage(game);
             scene.StartGame();
         }

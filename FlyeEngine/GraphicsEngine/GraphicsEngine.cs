@@ -1,7 +1,10 @@
-﻿using OpenTK.Graphics.OpenGL4;
+﻿using System.Drawing;
+using System.Drawing.Imaging;
+using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
+using PixelFormat = OpenTK.Graphics.OpenGL4.PixelFormat;
 
 namespace FlyeEngine.GraphicsEngine
 {
@@ -14,6 +17,8 @@ namespace FlyeEngine.GraphicsEngine
 
         private readonly Matrix4 _projectionMatrix;
         private Matrix4 _viewMatrix;
+
+        private int count = 0;
 
         public GraphicsEngine(NativeWindowSettings nativeWindowSettings, Action<float> update, Action render, float aspect) : base(GameWindowSettings.Default, nativeWindowSettings)
         {
@@ -138,7 +143,8 @@ namespace FlyeEngine.GraphicsEngine
         {
             base.OnUpdateFrame(args);
 
-            _update((float)args.Time);
+            //_update((float)args.Time);
+            _update(1 / 60f);
         }
 
         protected override void OnRenderFrame(FrameEventArgs args)
@@ -151,6 +157,21 @@ namespace FlyeEngine.GraphicsEngine
             _render();
 
             SwapBuffers();
+
+            // Record?
+
+            Bitmap bmp = new Bitmap(ClientSize.X, ClientSize.Y);
+            BitmapData data = bmp.LockBits(new Rectangle(0, 0, ClientSize.X, ClientSize.Y),
+                ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+
+            GL.ReadPixels(0, 0, ClientSize.X, ClientSize.Y, PixelFormat.Bgr, PixelType.UnsignedByte, data.Scan0);
+
+            bmp.UnlockBits(data);
+            bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
+            bmp.Save($"screenshots/{count}.png", ImageFormat.Png);
+            count++;
+
+            // ffmpeg -framerate 60 -i %d.png -c:v libx264 -r 60 output.mp4
         }
     }
 }

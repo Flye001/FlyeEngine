@@ -39,7 +39,7 @@ namespace FlyeEngine
         private readonly Dictionary<string, Mesh> _meshCollection;
         private readonly List<GameObject> _sceneObjects;
 
-        private bool _renderColliderWireframes = true;
+        private bool _renderColliderWireframes = false;
         private bool _printCameraPosition = false;
 
         public Action<float, KeyboardState> OnUpdate;
