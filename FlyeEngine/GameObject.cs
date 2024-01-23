@@ -49,12 +49,15 @@ namespace FlyeEngine
         public BoxCollider? BoxCollider;
         public Matrix4? ColliderModelMatrix => BoxCollider?.ModelMatrix;
 
+        private readonly List<Script> _scripts;
+
         public GameObject(Vector3 position, Vector3 rotation, Vector3 scale)
         {
             Position = position;
             PreviousPosition = position;
             _rotation = rotation;
             _scale = scale;
+            _scripts = new List<Script>();
 
             UpdateModelMatrix();
         }
@@ -67,8 +70,14 @@ namespace FlyeEngine
             _scale = scale;
             _mesh = mesh;
             ShaderType = shader;
+            _scripts = new List<Script>();
 
             UpdateModelMatrix();
+        }
+
+        public void AddScript(Script script)
+        {
+            _scripts.Add(script);            
         }
 
         public void AddRigidBody(float mass)
@@ -101,6 +110,10 @@ namespace FlyeEngine
 
         public void Update(float deltaTime)
         {
+            foreach (var script in _scripts)
+            {
+                script.OnUpdate(deltaTime);
+            }
             RigidBody?.Update(UpdatePosition, Position, deltaTime);
         }
 

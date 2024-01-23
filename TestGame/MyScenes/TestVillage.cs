@@ -2,6 +2,7 @@
 using FlyeEngine;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.GraphicsLibraryFramework;
+using TestGame.MyScripts;
 
 namespace TestGame.MyScenes
 {
@@ -92,14 +93,18 @@ namespace TestGame.MyScenes
             _car1 = Engine.AddGameObjectFromWavefront(new Transform() {Scale = new(10), Position = new(0, 1.4f, 35)}, buildings["hatchback"], ShaderTypeEnum.TextureWithLight);
             _car1.AddBoxCollider(new Vector3(4, 4, 8), new Vector3(0, 1.5f, 0));
             _car1.AddRigidBody(5);
+            _car1.AddScript(new CarMovementScript(_car1));
+
 
             var car2 = Engine.AddGameObjectFromWavefront(new Transform() {Scale = new(10), Position = new(0, 1.4f, 50)}, buildings["stationwagon"], ShaderTypeEnum.TextureWithLight);
             car2.AddBoxCollider(new Vector3(4, 4, 9), new Vector3(0, 1.5f, 0));
             car2.AddRigidBody(5);
+            car2.AddScript(new CarMovementScript(car2));
 
             var car3 = Engine.AddGameObjectFromWavefront(new Transform() {Scale = new(10), Position = new(0, 1.4f, 65)}, buildings["sedan"], ShaderTypeEnum.TextureWithLight);
             car3.AddBoxCollider(new Vector3(4, 4, 9), new Vector3(0, 1.5f, 0));
             car3.AddRigidBody(5);
+            car3.AddScript(new CarMovementScript(car3));
 
 
             //Engine.AddGameObjectFromWavefront(new Transform() { Position = new(5f, 0f, 5f) },
@@ -133,33 +138,7 @@ namespace TestGame.MyScenes
             {
                 _policeCar.RigidBody.AddForce(new Vector3(0, 5, 0));
             }
-
-            CarMoveScript(deltaTime);
         }
 
-        private void CarMoveScript(float deltaTime)
-        {
-
-            var speed = 20f;
-            switch (carDirection % 4)
-            {
-                case 0:
-                    _car1.UpdatePosition(_car1.Position + new Vector3(0, 0, speed * deltaTime));
-                    if (_car1.Position.Z >= 80) carDirection++;
-                    break;
-                case 1:
-                    _car1.UpdatePosition(_car1.Position + new Vector3(speed * deltaTime, 0, 0));
-                    if (_car1.Position.X >= 80) carDirection++;
-                    break;
-                case 3:
-                    _car1.UpdatePosition(_car1.Position + new Vector3(-speed * deltaTime, 0, 0));
-                    if (_car1.Position.X <= 0) carDirection++;
-                    break;
-                case 2:
-                    _car1.UpdatePosition(_car1.Position + new Vector3(0, 0, -speed * deltaTime));
-                    if (_car1.Position.Z <= 20) carDirection++;
-                    break;
-            }
-        }
     }
 }
